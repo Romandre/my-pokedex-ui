@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const flushUsers = () => {
     axios
-      .delete(`${apiUrl}/api/auth/deleteusers`)
+      .delete(`${apiUrl}api/auth/deleteusers`)
       .then((res) => {
         if (!res.data) {
           toast.error("Something went wrong! Try again...");
@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const flushFavourites = () => {
     axios
-      .delete(`${apiUrl}/api/auth/deletefavourites`)
+      .delete(`${apiUrl}api/auth/deletefavourites`)
       .then((res) => {
         if (!res.data) {
           toast.error("Something went wrong! Try again...");

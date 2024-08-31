@@ -16,11 +16,10 @@ const FavouritesPage: React.FC = () => {
   const { pokemons } = useContext(PokeContext);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchResult, setSearchResult] = useState<Pokemon[]>([]);
-  const minSearchQuery = 3;
 
   const startSearch = (value: string) => {
     setSearchQuery(value);
-    if (value.length >= minSearchQuery) {
+    if (value.length) {
       const result = pokemons.filter((item) => item.name.includes(value));
       console.log(result);
       setSearchResult(result);

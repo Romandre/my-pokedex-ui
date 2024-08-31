@@ -37,7 +37,7 @@ const SignInPage: React.FC = () => {
 
   const getUser = (token: string): void => {
     axios
-      .get(`${apiUrl}/api/auth/getuser`, {
+      .get(`${apiUrl}api/auth/getuser`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -58,7 +58,7 @@ const SignInPage: React.FC = () => {
 
     isLoginForm
       ? await axios
-          .post(`${apiUrl}/api/auth/login`, user)
+          .post(`${apiUrl}api/auth/login`, user)
           .then((res) => {
             const token = res?.data?.token;
             if (!token) {
@@ -71,7 +71,7 @@ const SignInPage: React.FC = () => {
             toast.error(error.response.data);
           })
       : await axios
-          .post(`${apiUrl}/api/auth/register`, user)
+          .post(`${apiUrl}api/auth/register`, user)
           .then((res) => {
             if (!res.data) {
               toast.error("Something went wrong! Try again...");
