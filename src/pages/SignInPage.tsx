@@ -25,6 +25,8 @@ const SignInPage: React.FC = () => {
   const [user, setUser] = useState<UserAuth | null>(null);
   const { login } = useContext(AuthContext);
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const changeForm = () => {
     setIsFormFlipped(!isFormFlipped);
 
@@ -35,7 +37,7 @@ const SignInPage: React.FC = () => {
 
   const getUser = (token: string): void => {
     axios
-      .get("https://my-pokedex-api.onrender.com/api/auth/getuser", {
+      .get(`${apiUrl}/api/auth/getuser`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -56,7 +58,7 @@ const SignInPage: React.FC = () => {
 
     isLoginForm
       ? await axios
-          .post("https://my-pokedex-api.onrender.com/api/auth/login", user)
+          .post(`${apiUrl}/api/auth/login`, user)
           .then((res) => {
             const token = res?.data?.token;
             if (!token) {
@@ -69,7 +71,7 @@ const SignInPage: React.FC = () => {
             toast.error(error.response.data);
           })
       : await axios
-          .post("https://my-pokedex-api.onrender.com/api/auth/register", user)
+          .post(`${apiUrl}/api/auth/register`, user)
           .then((res) => {
             if (!res.data) {
               toast.error("Something went wrong! Try again...");

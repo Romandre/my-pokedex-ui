@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null); // Initialize with null
   const [token, setToken] = useState<string>("");
 
-  console.log("User ", user);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   // Check if the user is authenticated
   const isAuthenticated = !!token;
@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const flushUsers = () => {
     axios
-      .delete("https://my-pokedex-api.onrender.com/api/auth/deleteusers")
+      .delete(`${apiUrl}/api/auth/deleteusers`)
       .then((res) => {
         if (!res.data) {
           toast.error("Something went wrong! Try again...");
@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const flushFavourites = () => {
     axios
-      .delete("https://my-pokedex-api.onrender.com/api/auth/deletefavourites")
+      .delete(`${apiUrl}/api/auth/deletefavourites`)
       .then((res) => {
         if (!res.data) {
           toast.error("Something went wrong! Try again...");

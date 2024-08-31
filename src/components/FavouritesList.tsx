@@ -9,8 +9,6 @@ const FavouritesList: React.FC = () => {
   const { favouritePokemons } = useContext(PokeContext);
   const formattedPokemons = favouritePokemons?.map((name) => ({ name }));
 
-  console.log(formattedPokemons[0]);
-
   return (
     <>
       {favouritePokemons.length ? (

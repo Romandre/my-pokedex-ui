@@ -30,6 +30,8 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
 
   const userId = user?.id;
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   // Fetch all pokemoms from pokeapi.co
   const fetchAllPokemons = useCallback(async () => {
     const storedPokemons = localStorage.getItem("pokemons");
@@ -62,9 +64,7 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
     );
 
     try {
-      const response = await axios.get(
-        `https://my-pokedex-api.onrender.com/api/getfavourites/${userId}`
-      );
+      const response = await axios.get(`${apiUrl}/api/getfavourites/${userId}`);
       const data = response.data;
 
       if (data) {
@@ -88,11 +88,9 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
   const addToFavourites = (pokemon: string) => {
     const data = { userId: userId, pokemon: pokemon };
 
-    axios
-      .post("https://my-pokedex-api.onrender.com/api/addfavourites", data)
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    axios.post(`${apiUrl}/api/addfavourites`, data).catch((error) => {
+      console.error("Error:", error);
+    });
 
     const updatedFavourites = [...favouritePokemons, pokemon];
     setFavouritepokemons(updatedFavourites);
@@ -106,11 +104,9 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
   const removeFromFavourites = (pokemon: string) => {
     const data = { userId: userId, pokemon: pokemon };
 
-    axios
-      .post("https://my-pokedex-api.onrender.com/api/removefavourites", data)
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    axios.post(`${apiUrl}/api/removefavourites`, data).catch((error) => {
+      console.error("Error:", error);
+    });
 
     const updatedFavourites = favouritePokemons.filter(
       (item) => item !== pokemon
