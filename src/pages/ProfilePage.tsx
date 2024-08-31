@@ -29,7 +29,7 @@ const ProfilePage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar color={"primary"}>
-          <IonTitle>Account settings</IonTitle>
+          <IonTitle>Personal Pokédex - Account settings</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

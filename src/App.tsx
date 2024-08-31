@@ -117,7 +117,6 @@ const App: React.FC = () => {
       ) : (
         <IonReactRouter>
           <IonRouterOutlet>
-            {/* <Route path="/create-account" component={CreateAccountPage} exact /> */}
             <Route path="/signin" component={SignInPage} exact />
             <Route path="/" render={() => <Redirect to="/signin" />} exact />
           </IonRouterOutlet>

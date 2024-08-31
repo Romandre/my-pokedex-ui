@@ -14,7 +14,7 @@ const HomePage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar color={"primary"}>
-          <IonTitle>My Pokédex</IonTitle>
+          <IonTitle>Personal Pokédex</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className={css({})}>

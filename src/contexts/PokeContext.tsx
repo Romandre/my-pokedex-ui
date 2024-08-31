@@ -51,10 +51,12 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
         console.error("Error fetching data: ", error);
       }
     }
+    setIsLoading(false);
   }, [setPokemons, setIsLoading]);
 
   // Fetch favourite pokemons for specific user
   const fetchFavourites = useCallback(async () => {
+    setIsLoading(true);
     const favouritesLocal = JSON.parse(
       localStorage.getItem(`favourites_user${userId}`) || "[]"
     );
@@ -79,6 +81,7 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
       console.error("Error fetching data from server: ", error);
       setFavouritepokemons(favouritesLocal);
     }
+    setIsLoading(false);
   }, [userId, setFavouritepokemons]);
 
   // Add pokemon to your favourites

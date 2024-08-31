@@ -90,7 +90,7 @@ const SignInPage: React.FC = () => {
     <IonPage>
       <IonHeader id="header">
         <IonToolbar color={"primary"}>
-          <IonTitle>Pokédex - Sign In</IonTitle>
+          <IonTitle>Personal Pokédex - Sign In</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
