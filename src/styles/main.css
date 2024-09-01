@@ -31,6 +31,14 @@ ion-spinner#main {
   height: 100px;
 }
 
+/* Keep search bar with same padding in ios and android */
+ion-toolbar.sc-ion-searchbar-ios-h,
+ion-toolbar .sc-ion-searchbar-ios-h,
+ion-toolbar.sc-ion-searchbar-md-h,
+ion-toolbar .sc-ion-searchbar-md-h {
+  padding: 8px 12px;
+}
+
 .Toastify__toast-container {
   top: 70px !important;
 }

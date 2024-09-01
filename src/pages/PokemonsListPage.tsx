@@ -11,6 +11,7 @@ import PokeContext from "../contexts/PokeContext";
 import PokemonsList from "../components/PokemonsList";
 
 import { Pokemon } from "../types/types";
+import { css } from "../../styled-system/css";
 
 const FavouritesPage: React.FC = () => {
   const { pokemons } = useContext(PokeContext);
@@ -41,6 +42,9 @@ const FavouritesPage: React.FC = () => {
             value={searchQuery}
             debounce={100}
             onIonInput={(e) => startSearch(e.target.value as string)}
+            className={css({
+              padding: "8px 12px",
+            })}
           ></IonSearchbar>
         </IonToolbar>
       </IonHeader>

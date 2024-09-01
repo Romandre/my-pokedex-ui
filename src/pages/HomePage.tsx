@@ -43,9 +43,10 @@ const HomePage: React.FC = () => {
                 className={css({
                   height: "160px",
                   color: "white",
-                  bg: "linear-gradient(135deg, #0a5b98 0%, #0b8db2, 70%, #0cb5c8 100%)",
+                  bg: "linear-gradient(135deg, #0cb5c8 30%, #5dc40c 90%)",
                   padding: "16px",
-                  marginBottom: "24px",
+                  marginTop: "8px",
+                  marginBottom: "20px",
                 })}
               >
                 <img
@@ -67,9 +68,9 @@ const HomePage: React.FC = () => {
                 className={css({
                   height: "160px",
                   color: "white",
-                  bg: "linear-gradient(135deg, #f0a10c 15%,  #0cb5c8)",
+                  bg: "linear-gradient(135deg, #0cb5c8 25%, #ffbb00 80%)",
                   padding: "16px",
-                  marginBottom: "24px",
+                  marginBottom: "20px",
                 })}
               >
                 <img
@@ -92,10 +93,9 @@ const HomePage: React.FC = () => {
               className={css({
                 height: "160px",
                 color: "white",
-                bg: "linear-gradient(135deg, #5dc40c 15%, #0cb5c8)",
+                bg: "linear-gradient(135deg, #0cb5c8 20%, #ff82cb 90%)",
                 padding: "16px",
               })}
-              disabled
             >
               <img
                 src={jigglypuff}
