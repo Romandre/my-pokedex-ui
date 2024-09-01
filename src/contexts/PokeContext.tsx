@@ -8,7 +8,7 @@ import {
 } from "react";
 import axios from "axios";
 import AuthContext from "./AuthContext";
-import { Pokemon } from "../types/types";
+import { Pokemon, PokemonData, PokemonPagePageProps } from "../types/types";
 
 interface PokemonItem {
   pokemon: string;

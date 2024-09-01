@@ -22,7 +22,6 @@ const FavouritesPage: React.FC = () => {
     setSearchQuery(value);
     if (value.length) {
       const result = pokemons.filter((item) => item.name.includes(value));
-      console.log(result);
       setSearchResult(result);
     } else {
       setSearchResult([]);

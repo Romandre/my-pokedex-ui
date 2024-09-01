@@ -17,13 +17,19 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
   const isFavourite = favouritePokemons?.includes(pokeName);
 
   return (
-    <IonCard className={css({ margin: "6px" })}>
+    <IonCard
+      className={css({
+        margin: "6px",
+        borderBottom: "2px solid var(--ion-color-primary)",
+      })}
+    >
       <IonBadge
         className={css({
           position: "absolute",
           right: "0",
           width: "40px",
           height: "40px",
+          cursor: "pointer",
         })}
         onClick={() =>
           isFavourite
@@ -54,7 +60,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
         className={css({
           display: "block",
           height: "100px",
-          padding: "4px",
+          padding: "8px 4px 4px 4px",
         })}
       >
         <img
@@ -84,6 +90,8 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
             verticalAlign: "middle",
             textAlign: "center",
             lineHeight: "1rem",
+            fontWeight: "500",
+            letterSpacing: "1px",
           })}
         >
           <p>{pokeName}</p>

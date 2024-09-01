@@ -16,14 +16,35 @@ import Loading from "../components/Loading";
 import pikachu from "../assets/pikachu.png";
 import bulbasaur from "../assets/bulbasaur.png";
 import jigglypuff from "../assets/jigglypuff.png";
+import eevee from "../assets/eevee.png";
 
 const HomePage: React.FC = () => {
   const { isLoading } = useContext(PokeContext);
+
+  const blockStyle = {
+    display: "inline-block",
+    width: "100%",
+    height: "160px",
+    marginBottom: "18px",
+    padding: "16px",
+    md: { width: "calc(50% - 10px)", _odd: { marginRight: "20px" } },
+    lg: {
+      width: "calc(33.3% - 24px)",
+      _odd: { marginRight: "12px", marginLeft: "12px" },
+      _even: { marginRight: "12px", marginLeft: "12px" },
+    },
+    xl: {
+      width: "calc(25% - 24px)",
+      _odd: { marginRight: "12px", marginLeft: "12px" },
+      _even: { marginRight: "12px", marginLeft: "12px" },
+    },
+  };
   const blockTextCss = css({
     display: "inline",
-    fontSize: "30px",
+    fontSize: "28px",
     fontWeight: "800",
     lineHeight: "2.5rem",
+    color: "white",
   });
 
   return (
@@ -38,64 +59,53 @@ const HomePage: React.FC = () => {
           <Loading />
         ) : (
           <>
-            <IonRouterLink routerLink={`/pokemons`}>
-              <IonCard
-                className={css({
-                  height: "160px",
-                  color: "white",
-                  bg: "linear-gradient(135deg, #0cb5c8 30%, #5dc40c 90%)",
-                  padding: "16px",
-                  marginTop: "8px",
-                  marginBottom: "20px",
-                })}
-              >
-                <img
-                  src={bulbasaur}
-                  className={css({
-                    position: "absolute",
-                    top: "-10px",
-                    right: "-70px",
-                    width: "210px",
-                  })}
-                ></img>
-                <div className={blockTextCss}>
-                  Check all <br /> Pokémons
-                </div>
-              </IonCard>
-            </IonRouterLink>
-            <IonRouterLink routerLink={`/favourites`}>
-              <IonCard
-                className={css({
-                  height: "160px",
-                  color: "white",
-                  bg: "linear-gradient(135deg, #0cb5c8 25%, #ffbb00 80%)",
-                  padding: "16px",
-                  marginBottom: "20px",
-                })}
-              >
-                <img
-                  src={pikachu}
-                  className={css({
-                    position: "absolute",
-                    top: "-40px",
-                    right: "-80px",
-                    width: "250px",
-                  })}
-                ></img>
-                <div className={blockTextCss}>
-                  View your <br />
-                  favourites
-                </div>
-              </IonCard>
-            </IonRouterLink>
-            {/*<IonRouterLink routerLink={`/create`}>*/}
             <IonCard
-              className={css({
-                height: "160px",
-                color: "white",
-                bg: "linear-gradient(135deg, #0cb5c8 20%, #ff82cb 90%)",
-                padding: "16px",
+              className={css(blockStyle, {
+                bg: "linear-gradient(135deg, #0cb5c8 30%, #5dc40c 90%)",
+                marginTop: "8px",
               })}
+              routerLink={`/pokemons`}
+            >
+              <img
+                src={bulbasaur}
+                className={css({
+                  position: "absolute",
+                  top: "-10px",
+                  right: "-70px",
+                  width: "210px",
+                })}
+              ></img>
+              <div className={blockTextCss}>
+                Check all <br /> Pokémons
+              </div>
+            </IonCard>
+
+            <IonCard
+              className={css(blockStyle, {
+                bg: "linear-gradient(135deg, #0cb5c8 25%, #ffbb00 80%)",
+              })}
+              routerLink={`/favourites`}
+            >
+              <img
+                src={pikachu}
+                className={css({
+                  position: "absolute",
+                  top: "-40px",
+                  right: "-80px",
+                  width: "250px",
+                })}
+              ></img>
+              <div className={blockTextCss}>
+                View your <br />
+                favourites
+              </div>
+            </IonCard>
+
+            <IonCard
+              className={css(blockStyle, {
+                bg: "linear-gradient(135deg, #0cb5c8 20%, #ff82cb 90%)",
+              })}
+              routerLink={`/create`}
               disabled
             >
               <img
@@ -110,12 +120,36 @@ const HomePage: React.FC = () => {
               <div className={blockTextCss}>
                 Create your <br />
                 own Pokémon
+                <p className={css({ fontSize: "16px", fontStyle: "italic" })}>
+                  Under construction...
+                </p>
               </div>
-              <p className={css({ fontSize: "16px", fontStyle: "italic" })}>
-                Under construction...
-              </p>
             </IonCard>
-            {/* </IonRouterLink> */}
+
+            <IonCard
+              className={css(blockStyle, {
+                bg: "linear-gradient(135deg, #0cb5c8 15%, #ed2e0c)",
+              })}
+              routerLink={`/create`}
+              disabled
+            >
+              <img
+                src={eevee}
+                className={css({
+                  position: "absolute",
+                  top: "5px",
+                  right: "-45px",
+                  width: "200px",
+                })}
+              ></img>
+              <div className={blockTextCss}>
+                Leave review <br />
+                for Pokémon
+                <p className={css({ fontSize: "16px", fontStyle: "italic" })}>
+                  Under construction...
+                </p>
+              </div>
+            </IonCard>
           </>
         )}
       </IonContent>
