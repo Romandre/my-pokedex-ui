@@ -30,6 +30,7 @@ const SignInPage: React.FC = () => {
   const changeForm = () => {
     setIsFormFlipped(!isFormFlipped);
 
+    // The form will be changed in 200ms after flip starts
     setTimeout(() => {
       setIsloginForm(!isLoginForm);
     }, 200);
@@ -98,9 +99,9 @@ const SignInPage: React.FC = () => {
       <IonContent>
         <div
           className={css({
-            height: "100%",
-            justifyContent: "center",
-            alignContent: "center",
+            position: "relative",
+            top: "50%",
+            transform: "translateY(-50%)",
           })}
         >
           <IonCard

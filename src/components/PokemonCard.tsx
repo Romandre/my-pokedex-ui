@@ -78,11 +78,12 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
         <div
           className={css({
             display: "flex",
-            height: "50px",
+            height: "40px",
             alignItems: "center",
             justifyContent: "center",
             verticalAlign: "middle",
             textAlign: "center",
+            lineHeight: "1rem",
           })}
         >
           <p>{pokeName}</p>

@@ -39,6 +39,7 @@ const FavouritesPage: React.FC = () => {
             animated={true}
             placeholder="Search Pokémon"
             value={searchQuery}
+            debounce={100}
             onIonInput={(e) => startSearch(e.target.value as string)}
           ></IonSearchbar>
         </IonToolbar>

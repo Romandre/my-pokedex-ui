@@ -26,7 +26,7 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
   const { user, isAuthenticated } = useContext(AuthContext);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [favouritePokemons, setFavouritepokemons] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const userId = user?.id;
 
@@ -40,7 +40,6 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
     if (storedPokemons) {
       setPokemons(JSON.parse(storedPokemons));
     } else {
-      setIsLoading(true);
       try {
         const response = await axios.get(
           "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0"
@@ -53,12 +52,10 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
         console.error("Error fetching data: ", error);
       }
     }
-    setIsLoading(false);
   }, [setPokemons, setIsLoading]);
 
   // Fetch favourite pokemons for specific user
   const fetchFavourites = useCallback(async () => {
-    setIsLoading(true);
     const favouritesLocal = JSON.parse(
       localStorage.getItem(`favourites_user${userId}`) || "[]"
     );
@@ -81,7 +78,6 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
       console.error("Error fetching data from server: ", error);
       setFavouritepokemons(favouritesLocal);
     }
-    setIsLoading(false);
   }, [userId, setFavouritepokemons]);
 
   // Add pokemon to your favourites
@@ -124,9 +120,14 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (isAuthenticated) {
+      setIsLoading(true);
       fetchAllPokemons();
       fetchFavourites();
       //syncFavourites();
+
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1500);
     }
   }, [fetchAllPokemons, fetchFavourites, setIsLoading, isAuthenticated]);
 

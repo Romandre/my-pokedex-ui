@@ -6,7 +6,6 @@ import {
   IonIcon,
   IonLabel,
   IonRouterOutlet,
-  IonSpinner,
   IonTabBar,
   IonTabButton,
   IonTabs,
@@ -15,7 +14,6 @@ import {
 
 /* Auth Context */
 import AuthContext from "./contexts/AuthContext";
-import PokeContext, { PokeProvider } from "./contexts/PokeContext";
 
 /* Pages */
 import HomePage from "./pages/HomePage";
@@ -44,9 +42,6 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 
-/* Panda CSS */
-import { css } from "../styled-system/css";
-
 /* Theme variables */
 import "./theme/variables.css";
 import { ToastContainer } from "react-toastify";
@@ -55,29 +50,10 @@ setupIonicReact();
 
 const App: React.FC = () => {
   const { isAuthenticated } = useContext(AuthContext);
-  const { isLoading } = useContext(PokeContext);
-
-  console.log("isLoading: ", isLoading);
 
   return (
     <IonApp>
       <ToastContainer position="top-center" autoClose={3000} />
-      {isLoading && (
-        <div
-          className={css({
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-            width: "100vw",
-            bg: "rgba(0,0,0, 0.5)",
-            zIndex: 1,
-          })}
-        >
-          <IonSpinner id="main" name="bubbles"></IonSpinner>
-        </div>
-      )}
-
       {isAuthenticated === true ? (
         <IonReactRouter>
           <IonTabs>

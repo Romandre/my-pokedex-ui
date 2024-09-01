@@ -29,13 +29,14 @@ const PokemonPage: React.FC<PokemonPagePageProps> = ({ match }) => {
 
   const fetchPokemons = useCallback(() => {
     axios
-      .post(`https://pokeapi.co/api/v2/pokemon/${match.params.name}`)
+      .get(`https://pokeapi.co/api/v2/pokemon/${match.params.name}`)
       .then((res) => {
         const pokemonData: PokemonData = {
           id: res.data.id,
           name: res.data.name,
           cries: res.data.cries || {},
         };
+        console.log(pokemonData);
         setPokemon(pokemonData);
       });
   }, []);
@@ -51,7 +52,7 @@ const PokemonPage: React.FC<PokemonPagePageProps> = ({ match }) => {
           <IonButtons slot="start">
             <IonBackButton text="Back" icon={caretBack}></IonBackButton>
           </IonButtons>
-          <IonTitle>My Pokédex</IonTitle>
+          <IonTitle>Personal Pokédex</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -71,10 +72,10 @@ const PokemonPage: React.FC<PokemonPagePageProps> = ({ match }) => {
         <div>
           Sounds:
           {pokemon?.cries &&
-            Object.entries(pokemon?.cries).map(([key, value]) => (
-              <div key={value}>
-                <span>{value[0]}</span>
-                <audio controls src={value[1]}>
+            Object.entries(pokemon?.cries).map((item) => (
+              <div key={item[0]}>
+                <span>{item[0]}</span>
+                <audio controls src={item[1]}>
                   Your browser does not support the
                   <code>audio</code> element.
                 </audio>
