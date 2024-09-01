@@ -5,16 +5,14 @@ import { IonBadge, IonCard, IonIcon, IonRouterLink } from "@ionic/react";
 import { css } from "../../styled-system/css";
 import { heartOutline, heartSharp } from "ionicons/icons";
 import { Pokemon } from "../types/types";
+import HeartBadge from "./HeartBadge";
 
 export interface PokemonCardProps {
   pokemon: Pokemon;
 }
 
 const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
-  const { favouritePokemons, addToFavourites, removeFromFavourites } =
-    useContext(PokeContext);
   const pokeName = pokemon.name;
-  const isFavourite = favouritePokemons?.includes(pokeName);
 
   return (
     <IonCard
@@ -23,38 +21,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
         borderBottom: "2px solid var(--ion-color-primary)",
       })}
     >
-      <IonBadge
-        className={css({
-          position: "absolute",
-          right: "0",
-          width: "40px",
-          height: "40px",
-          cursor: "pointer",
-        })}
-        onClick={() =>
-          isFavourite
-            ? removeFromFavourites(pokeName)
-            : addToFavourites(pokeName)
-        }
-      >
-        {isFavourite ? (
-          <IonIcon
-            icon={heartSharp}
-            className={css({
-              width: "100%",
-              height: "40px",
-            })}
-          />
-        ) : (
-          <IonIcon
-            icon={heartOutline}
-            className={css({
-              width: "100%",
-              height: "40px",
-            })}
-          />
-        )}
-      </IonBadge>
+      <HeartBadge pokemonName={pokeName} />
       <IonRouterLink
         routerLink={`/pokemon/${pokeName}`}
         className={css({

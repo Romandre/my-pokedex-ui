@@ -33,6 +33,9 @@ const ProfilePage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
+        <p className={css({ margin: "12px 0", fontSize: "24px" })}>
+          Profile settings
+        </p>
         <IonCard
           className={css({
             display: "flex",
@@ -79,8 +82,15 @@ const ProfilePage: React.FC = () => {
         ></IonAlert>
 
         {user?.id === 1 && user?.username === "admin" && (
-          <>
-            <h3>Danger zone</h3>
+          <IonCard
+            className={css({
+              marginTop: "24px",
+              padding: "16px",
+            })}
+          >
+            <p className={css({ margin: "0 0 12px", fontSize: "20px" })}>
+              Danger zone
+            </p>
             <IonButton
               id="flush-users"
               color={"danger"}
@@ -127,7 +137,7 @@ const ProfilePage: React.FC = () => {
                 },
               ]}
             ></IonAlert>
-          </>
+          </IonCard>
         )}
       </IonContent>
     </IonPage>

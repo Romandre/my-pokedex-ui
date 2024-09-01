@@ -13,7 +13,9 @@ const FavouritesList: React.FC = () => {
     <>
       {favouritePokemons.length ? (
         <>
-          <h2 className={css({ margin: "12px 0" })}>Favourites list</h2>
+          <p className={css({ margin: "12px 0", fontSize: "24px" })}>
+            Favourites list
+          </p>
           <IonGrid>
             <IonRow
               className={css({
