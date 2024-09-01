@@ -15,9 +15,11 @@ import { useIonRouter } from "@ionic/react";
 import AuthContext from "../contexts/AuthContext";
 
 import profile from "../assets/profile.png";
+import PokeContext from "../contexts/PokeContext";
 
 const ProfilePage: React.FC = () => {
-  const { user, logout, flushUsers, flushFavourites } = useContext(AuthContext);
+  const { user, logout, flushUsers } = useContext(AuthContext);
+  const { flushFavourites } = useContext(PokeContext);
   const router = useIonRouter();
 
   const handleLogout = () => {

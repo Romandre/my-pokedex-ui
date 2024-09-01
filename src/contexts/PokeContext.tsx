@@ -8,7 +8,10 @@ import {
 } from "react";
 import axios from "axios";
 import AuthContext from "./AuthContext";
-import { Pokemon, PokemonData, PokemonPagePageProps } from "../types/types";
+
+import { toast } from "react-toastify";
+
+import { Pokemon } from "../types/types";
 
 interface PokemonItem {
   pokemon: string;
@@ -19,6 +22,7 @@ const PokeContext = createContext({
   favouritePokemons: [] as string[],
   addToFavourites: (pokemon: string) => {},
   removeFromFavourites: (pokemon: string) => {},
+  flushFavourites: () => {},
   isLoading: false as boolean,
 });
 
@@ -68,6 +72,7 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
         const favouritesFromDb = data.map((item: PokemonItem) => item.pokemon);
         const mergeData: string[] = favouritesLocal.concat(favouritesFromDb);
         const unifyData: string[] = [...new Set(mergeData)];
+
         setFavouritepokemons(unifyData);
         localStorage.setItem(
           `favourites_user${userId}`,
@@ -115,6 +120,23 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
     );
   };
 
+  const flushFavourites = () => {
+    localStorage.removeItem(`favourites_user${user?.id}`);
+    setFavouritepokemons([]);
+
+    axios
+      .delete(`${apiUrl}api/auth/deletefavourites`)
+      .then((res) => {
+        if (!res.data) {
+          toast.error("Something went wrong! Try again...");
+        }
+        toast.success(res.data);
+      })
+      .catch((error) => {
+        toast.error(error.response.data);
+      });
+  };
+
   // Sync favourites between server and client by the time stamp
   const syncFavourites = () => {};
 
@@ -138,6 +160,7 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
       favouritePokemons,
       addToFavourites,
       removeFromFavourites,
+      flushFavourites,
       isLoading,
     }),
     [
@@ -145,6 +168,7 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
       favouritePokemons,
       addToFavourites,
       removeFromFavourites,
+      flushFavourites,
       isLoading,
     ]
   );

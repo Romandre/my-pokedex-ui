@@ -3,24 +3,13 @@ import { createContext, useState, useEffect, useMemo } from "react";
 import { toast } from "react-toastify";
 import { User } from "../types/types";
 
-interface AuthContextType {
-  user: User | null;
-  token: string;
-  login: (token: string, userData: User) => void;
-  logout: () => void;
-  flushUsers: () => void;
-  flushFavourites: () => void;
-  isAuthenticated: boolean;
-}
-
-const AuthContext = createContext<AuthContextType>({
-  user: null, // Initialize with null
-  token: "",
+const AuthContext = createContext({
+  user: null as User | null,
+  token: "" as string,
   login: (token: string, userData: User) => {},
   logout: () => {},
   flushUsers: () => {},
-  flushFavourites: () => {},
-  isAuthenticated: false,
+  isAuthenticated: false as boolean,
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -77,20 +66,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       });
   };
 
-  const flushFavourites = () => {
-    axios
-      .delete(`${apiUrl}api/auth/deletefavourites`)
-      .then((res) => {
-        if (!res.data) {
-          toast.error("Something went wrong! Try again...");
-        }
-        toast.success(res.data);
-      })
-      .catch((error) => {
-        toast.error(error.response.data);
-      });
-  };
-
   const contextValue = useMemo(
     () => ({
       user,
@@ -98,10 +73,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       login,
       logout,
       flushUsers,
-      flushFavourites,
       isAuthenticated,
     }),
-    [user, token, login, logout, flushUsers, flushFavourites, isAuthenticated]
+    [user, token, login, logout, flushUsers, isAuthenticated]
   );
 
   return (
