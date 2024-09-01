@@ -19,7 +19,7 @@ ion-content {
   --padding-bottom: 12px;
   --padding-start: 16px;
   --padding-end: 16px;
-  --background: whitesmoke;
+  --background: #ebebeb;
 }
 
 /* Removes inherited background for shadow link element of ion-card */
