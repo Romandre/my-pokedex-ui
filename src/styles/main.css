@@ -22,6 +22,11 @@ ion-content {
   --background: whitesmoke;
 }
 
+/* Removes inherited background for shadow link element of ion-card */
+ion-card::part(native) {
+  background: none !important;
+}
+
 ion-backdrop {
   background: rgba(0, 0, 0, 0.3);
 }

@@ -127,6 +127,10 @@ const PokemonPage: React.FC<PokemonPagePageProps> = ({ match }) => {
           </div>
           <IonCard className={pokemonInfoCard}>
             <div className={pokemonInfoSection}>
+              <b>ID: </b>
+              {pokemon?.id}
+            </div>
+            <div className={pokemonInfoSection}>
               <b>Weight: </b>
               {pokemon?.weight}
             </div>

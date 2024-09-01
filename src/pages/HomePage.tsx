@@ -39,6 +39,7 @@ const HomePage: React.FC = () => {
       _even: { marginRight: "12px", marginLeft: "12px" },
     },
   };
+
   const blockTextCss = css({
     display: "inline",
     fontSize: "28px",
