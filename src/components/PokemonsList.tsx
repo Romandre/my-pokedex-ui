@@ -47,18 +47,20 @@ const PokemonsList: React.FC<PokemonsListProps> = ({ pokemons }) => {
           ))}
         </IonRow>
       </IonGrid>
-      <IonInfiniteScroll
-        onIonInfinite={(ev) => {
-          const newOffset = offset + pokemonInView;
-          setOffset(newOffset);
-          setTimeout(() => ev.target.complete(), 500);
-        }}
-      >
-        <IonInfiniteScrollContent
-          loadingText="Loading more Pokemones..."
-          loadingSpinner="bubbles"
-        ></IonInfiniteScrollContent>
-      </IonInfiniteScroll>
+      {viewedPokemons.length !== pokemons.length && (
+        <IonInfiniteScroll
+          onIonInfinite={(ev) => {
+            const newOffset = offset + pokemonInView;
+            setOffset(newOffset);
+            setTimeout(() => ev.target.complete(), 500);
+          }}
+        >
+          <IonInfiniteScrollContent
+            loadingText="Loading more Pokemones..."
+            loadingSpinner="bubbles"
+          ></IonInfiniteScrollContent>
+        </IonInfiniteScroll>
+      )}
     </>
   );
 };

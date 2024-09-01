@@ -96,6 +96,7 @@ const HomePage: React.FC = () => {
                 bg: "linear-gradient(135deg, #0cb5c8 20%, #ff82cb 90%)",
                 padding: "16px",
               })}
+              disabled
             >
               <img
                 src={jigglypuff}
@@ -110,7 +111,9 @@ const HomePage: React.FC = () => {
                 Create your <br />
                 own Pokémon
               </div>
-              <p className={css({ fontStyle: "italic" })}>Under construction</p>
+              <p className={css({ fontSize: "16px", fontStyle: "italic" })}>
+                Under construction...
+              </p>
             </IonCard>
             {/* </IonRouterLink> */}
           </>

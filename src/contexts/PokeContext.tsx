@@ -125,9 +125,10 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
       fetchFavourites();
       //syncFavourites();
 
+      // Add timeout just for sake of seeing the loading
       setTimeout(() => {
         setIsLoading(false);
-      }, 1500);
+      }, 1000);
     }
   }, [fetchAllPokemons, fetchFavourites, setIsLoading, isAuthenticated]);
 

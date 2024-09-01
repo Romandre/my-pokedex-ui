@@ -39,6 +39,10 @@ ion-toolbar .sc-ion-searchbar-md-h {
   padding: 8px 12px;
 }
 
+ion-tab-bar {
+  border-top: 1px solid var(--ion-color-primary);
+}
+
 .Toastify__toast-container {
   top: 70px !important;
 }
