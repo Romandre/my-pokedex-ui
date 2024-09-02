@@ -104,6 +104,7 @@ const PokemonPage: React.FC<PokemonPagePageProps> = ({ match }) => {
 
   const findPokemon = useCallback(() => {
     setIsLoading(true);
+
     if (customPokemons.length) {
       const customPokemonData = customPokemons.filter(
         (item) => item.name === currentPokemon

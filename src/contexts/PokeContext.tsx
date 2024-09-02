@@ -112,9 +112,12 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
   const removeMyCustomPokemon = (pokemon: string) => {
     const data = { userId: userId, name: pokemon };
 
-    axios.post(`${apiUrl}api/custompokemon/remove`, data).catch((error) => {
-      toast.success(error);
-    });
+    axios
+      .post(`${apiUrl}api/custompokemon/remove`, data)
+      .then((res) => toast.success(res.data))
+      .catch((error) => {
+        toast.error(error);
+      });
 
     const updatedCustomPokemons = customPokemons.filter(
       (item) => item.name !== pokemon
@@ -123,7 +126,11 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
     setCustomPokemons(updatedCustomPokemons);
     localStorage.setItem("customPoke", JSON.stringify(updatedCustomPokemons));
 
-    removeFromFavourites(pokemon);
+    // Remove from favourites if exists
+    const favouritesLocal = JSON.parse(
+      localStorage.getItem(`favourites_user${userId}`) || "[]"
+    );
+    if (favouritesLocal.includes(pokemon)) removeFromFavourites(pokemon);
   };
 
   // Flush all custom Pokémons for specific user
