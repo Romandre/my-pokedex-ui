@@ -15,7 +15,7 @@ import { CustomPokemon, PokemonData } from "../types/types";
 const PokeContext = createContext({
   pokemons: [] as string[],
   favouritePokemons: [] as string[],
-  customPokemons: [] as PokemonData[],
+  customPokemons: [] as CustomPokemon[],
   createMyCustomPokemon: (data: CustomPokemon) => {},
   removeMyCustomPokemon: (pokemon: string) => {},
   flushCustomPokemons: () => {},
@@ -28,7 +28,7 @@ const PokeContext = createContext({
 export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
   const { user, isAuthenticated } = useContext(AuthContext);
   const [pokemons, setPokemons] = useState<string[]>([]);
-  const [customPokemons, setCustomPokemons] = useState<PokemonData[]>([]);
+  const [customPokemons, setCustomPokemons] = useState<CustomPokemon[]>([]);
   const [favouritePokemons, setFavouritePokemons] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -84,7 +84,8 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
   // Create new custom Pokémon
   const createMyCustomPokemon = async (pokemon: CustomPokemon) => {
     const { name, weight, mainAbility, secondAbility, isPrivate } = pokemon;
-    const custom = {
+    const customPokemon = {
+      id: customPokemons.length + 1,
       userId: userId,
       name,
       weight,
@@ -94,7 +95,7 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     axios
-      .post(`${apiUrl}api/custompokemon/add`, custom)
+      .post(`${apiUrl}api/custompokemon/add`, customPokemon)
       .then((res) => {
         toast.success(res.data);
       })
@@ -102,20 +103,7 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
         toast.error(error);
       });
 
-    const abilities = [];
-    if (mainAbility?.length) abilities.push({ ability: { name: mainAbility } });
-    if (secondAbility?.length)
-      abilities.push({ ability: { name: secondAbility } });
-    const newPokemon: PokemonData = {
-      id: customPokemons.length + 1,
-      userId: userId,
-      name: name,
-      weight: weight ? weight : 0,
-      abilities: abilities,
-      private: isPrivate ? 1 : 0,
-    };
-
-    const updatedCustomPokemons = [...customPokemons, newPokemon];
+    const updatedCustomPokemons = [...customPokemons, customPokemon];
     setCustomPokemons(updatedCustomPokemons);
     localStorage.setItem("customPoke", JSON.stringify(updatedCustomPokemons));
   };

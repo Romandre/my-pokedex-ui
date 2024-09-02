@@ -3,7 +3,6 @@ import {
   IonContent,
   IonHeader,
   IonPage,
-  IonRouterLink,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
@@ -118,7 +117,7 @@ const HomePage: React.FC = () => {
                 })}
               ></img>
               <div className={blockTextCss}>
-                Manage castom <br />
+                Manage custom <br />
                 Pokémons
               </div>
             </IonCard>

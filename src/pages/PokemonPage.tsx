@@ -109,10 +109,12 @@ const PokemonPage: React.FC<PokemonPagePageProps> = ({ match }) => {
         (item) => item.name === currentPokemon
       );
 
-      console.log(customPokemonData);
-
       if (customPokemonData.length) {
-        const pokemonData: PokemonData = customPokemonData[0];
+        const pokemonData: PokemonData = {
+          id: customPokemonData[0].id,
+          name: customPokemonData[0].name,
+          weight: customPokemonData[0].weight || 0,
+        };
 
         setPokemon(pokemonData);
         setIsCustom(true);

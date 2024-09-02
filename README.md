@@ -1,4 +1,4 @@
-# Pokédex App UI
+# Personal Pokédex App UI
 
 ### Built with Ionic + React
 
