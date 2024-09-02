@@ -19,7 +19,7 @@ import PokeContext from "../contexts/PokeContext";
 
 const ProfilePage: React.FC = () => {
   const { user, logout, flushUsers } = useContext(AuthContext);
-  const { flushFavourites } = useContext(PokeContext);
+  const { flushFavourites, flushCustomPokemons } = useContext(PokeContext);
   const router = useIonRouter();
 
   const handleLogout = () => {
@@ -83,64 +83,70 @@ const ProfilePage: React.FC = () => {
           ]}
         ></IonAlert>
 
-        {user?.id === 1 && user?.username === "admin" && (
-          <IonCard
-            className={css({
-              marginTop: "24px",
-              padding: "16px",
-            })}
+        <IonCard
+          className={css({
+            marginTop: "24px",
+            padding: "16px",
+          })}
+        >
+          <p className={css({ margin: "0 0 12px", fontSize: "20px" })}>
+            Manage data
+          </p>
+
+          {user?.id === 1 && user?.username === "admin" && (
+            <>
+              <IonButton
+                id="flush-users"
+                color={"danger"}
+                className={css({ display: "block", marginTop: "16px" })}
+              >
+                Flush users
+              </IonButton>
+              <IonAlert
+                trigger="flush-users"
+                header="Really want to flush users data?"
+                subHeader="Admin user will not be removed!"
+                buttons={[
+                  {
+                    text: "No",
+                  },
+                  {
+                    text: "Yes",
+                    handler: () => {
+                      flushUsers();
+                    },
+                  },
+                ]}
+              ></IonAlert>
+            </>
+          )}
+
+          <IonButton
+            id="flush-pokemons"
+            color={"danger"}
+            className={css({ display: "block", marginTop: "16px" })}
           >
-            <p className={css({ margin: "0 0 12px", fontSize: "20px" })}>
-              Danger zone
-            </p>
-            <IonButton
-              id="flush-users"
-              color={"danger"}
-              className={css({ display: "block", marginTop: "16px" })}
-            >
-              Flush users
-            </IonButton>
-            <IonButton
-              id="flush-favourites"
-              color={"danger"}
-              className={css({ display: "block", marginTop: "16px" })}
-            >
-              Flush all favourites
-            </IonButton>
-            <IonAlert
-              trigger="flush-users"
-              header="Really want to flush users data?"
-              subHeader="Admin user will not be removed!"
-              buttons={[
-                {
-                  text: "No",
+            Flush all your favourites & custom pokemons
+          </IonButton>
+
+          <IonAlert
+            trigger="flush-pokemons"
+            header="Really want to flush favourites and custom pokemons data?"
+            subHeader="All your favourite and custom Pokemons will be removed permanently."
+            buttons={[
+              {
+                text: "No",
+              },
+              {
+                text: "Yes",
+                handler: () => {
+                  flushFavourites();
+                  flushCustomPokemons();
                 },
-                {
-                  text: "Yes",
-                  handler: () => {
-                    flushUsers();
-                  },
-                },
-              ]}
-            ></IonAlert>
-            <IonAlert
-              trigger="flush-favourites"
-              header="Really want to flush favourites data?"
-              subHeader="All favourite Pokemons will be removed permanently."
-              buttons={[
-                {
-                  text: "No",
-                },
-                {
-                  text: "Yes",
-                  handler: () => {
-                    flushFavourites();
-                  },
-                },
-              ]}
-            ></IonAlert>
-          </IonCard>
-        )}
+              },
+            ]}
+          ></IonAlert>
+        </IonCard>
       </IonContent>
     </IonPage>
   );

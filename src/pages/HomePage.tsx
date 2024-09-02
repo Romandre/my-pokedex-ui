@@ -120,9 +120,6 @@ const HomePage: React.FC = () => {
               <div className={blockTextCss}>
                 Manage castom <br />
                 Pokémons
-                <p className={css({ fontSize: "16px", fontStyle: "italic" })}>
-                  Under construction...
-                </p>
               </div>
             </IonCard>
 

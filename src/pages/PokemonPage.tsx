@@ -81,7 +81,6 @@ const PokemonPage: React.FC<PokemonPagePageProps> = ({ match }) => {
   });
 
   const fetchPokemon = useCallback(async () => {
-    setIsLoading(true);
     await axios
       .get(`https://pokeapi.co/api/v2/pokemon/${currentPokemon}`)
       .then((res) => {
@@ -103,30 +102,35 @@ const PokemonPage: React.FC<PokemonPagePageProps> = ({ match }) => {
     setIsLoading(false);
   }, [setPokemon, setIsLoading]);
 
+  const findPokemon = useCallback(() => {
+    setIsLoading(true);
+    if (customPokemons.length) {
+      const customPokemonData = customPokemons.filter(
+        (item) => item.name === currentPokemon
+      );
+
+      console.log(customPokemonData);
+
+      if (customPokemonData.length) {
+        const pokemonData: PokemonData = customPokemonData[0];
+
+        setPokemon(pokemonData);
+        setIsCustom(true);
+        setIsLoading(false);
+      } else {
+        fetchPokemon();
+      }
+    }
+  }, [setIsLoading, setIsCustom, setPokemon, fetchPokemon, customPokemons]);
+
   const deletePokemon = (name: string) => {
     removeMyCustomPokemon(pokemon!.name);
     router.push("/custom", "back");
   };
 
   useEffect(() => {
-    const customPokemonData = customPokemons.filter(
-      (item) => item.name === currentPokemon
-    );
-
-    if (customPokemonData.length) {
-      const pokemonData: PokemonData = {
-        id: customPokemonData[0].id,
-        name: customPokemonData[0].name,
-        weight: customPokemonData[0].weight || 0,
-        abilities: customPokemonData[0].abilities,
-      };
-
-      setPokemon(pokemonData);
-      setIsCustom(true);
-    } else {
-      fetchPokemon();
-    }
-  }, [fetchPokemon, customPokemons]);
+    findPokemon();
+  }, [findPokemon]);
 
   return (
     <IonPage>
@@ -185,19 +189,21 @@ const PokemonPage: React.FC<PokemonPagePageProps> = ({ match }) => {
                       {pokemon?.weight}
                     </div>
 
-                    <div className={pokemonInfoSection}>
-                      <b>Abilities: </b>
-                      {pokemon?.abilities?.map((item) => (
-                        <div key={item.ability.name}>
-                          <span>- {item.ability.name}</span>
-                        </div>
-                      ))}
-                    </div>
+                    {pokemon?.abilities && (
+                      <div className={pokemonInfoSection}>
+                        <b>Abilities: </b>
+                        {pokemon?.abilities?.map((item) => (
+                          <div key={item.ability.name}>
+                            <span>- {item.ability.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
-                    <div className={pokemonInfoSection}>
-                      <b>Cries: </b>
-                      {pokemon?.cries &&
-                        Object.entries(pokemon?.cries).map((item) => (
+                    {pokemon?.cries && (
+                      <div className={pokemonInfoSection}>
+                        <b>Cries: </b>
+                        {Object.entries(pokemon.cries).map((item) => (
                           <div key={item[0]}>
                             <span>- {item[0]}</span>
                             <audio controls>
@@ -207,34 +213,39 @@ const PokemonPage: React.FC<PokemonPagePageProps> = ({ match }) => {
                             </audio>
                           </div>
                         ))}
-                    </div>
+                      </div>
+                    )}
 
-                    <div className={pokemonInfoSection}>
-                      <b>Forms: </b>
-                      <p
-                        className={css({
-                          textTransform: "none",
-                        })}
-                      >
-                        This pokemon has {pokemon?.forms?.length && "only "}
-                        {pokemon?.forms?.length}
-                        {pokemon?.forms?.length! > 1 ? " forms" : "form"}
-                      </p>
-                      {pokemon?.forms?.map((item) => (
-                        <div key={item.name}>
-                          <span>- {item.name}</span>
-                        </div>
-                      ))}
-                    </div>
+                    {pokemon?.forms && (
+                      <div className={pokemonInfoSection}>
+                        <b>Forms: </b>
+                        <p
+                          className={css({
+                            textTransform: "none",
+                          })}
+                        >
+                          This pokemon has {pokemon.forms.length && "only "}
+                          {pokemon.forms.length}
+                          {pokemon.forms.length! > 1 ? " forms" : "form"}
+                        </p>
+                        {pokemon?.forms?.map((item) => (
+                          <div key={item.name}>
+                            <span>- {item.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
-                    <div className={pokemonInfoSection}>
-                      <b>Types: </b>
-                      {pokemon?.types?.map((item) => (
-                        <div key={item.type.name}>
-                          <span>- {item.type.name}</span>
-                        </div>
-                      ))}
-                    </div>
+                    {pokemon?.types && (
+                      <div className={pokemonInfoSection}>
+                        <b>Types: </b>
+                        {pokemon.types.map((item) => (
+                          <div key={item.type.name}>
+                            <span>- {item.type.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
                     {isCustom && (
                       <>

@@ -1,7 +1,6 @@
 import { FormEvent, useState } from "react";
 import {
   IonButton,
-  IonCheckbox,
   IonInput,
   IonItem,
   IonLabel,
@@ -23,15 +22,14 @@ const CustomPokemonForm: React.FC<CustomPokemonFormProps> = ({ onSubmit }) => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    const abilities = [];
-    if (mainAbility?.length) abilities.push({ ability: { name: mainAbility } });
-    if (secondAbility?.length)
-      abilities.push({ ability: { name: secondAbility } });
+    const formattedName = name.trim().replace(/\s+/g, "-");
+
     const data: CustomPokemon = {
       id: 0,
-      name,
+      name: formattedName,
       weight,
-      abilities,
+      mainAbility,
+      secondAbility,
       isPrivate,
     };
     onSubmit(data);
@@ -112,7 +110,7 @@ const CustomPokemonForm: React.FC<CustomPokemonFormProps> = ({ onSubmit }) => {
         >
           <IonLabel>Make it private?</IonLabel>
           <IonNote color="medium">
-            Other users will never see your Pokémon if it's private.
+            Other users can't see your private Pokémons.
           </IonNote>
         </IonToggle>
       </IonItem>

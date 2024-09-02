@@ -165,7 +165,7 @@ const CustomPokemonsPage: React.FC = () => {
               </IonContent>
             </IonModal>
 
-            <PokemonsList pokemons={formattedPokemons} />
+            <PokemonsList pokemons={formattedPokemons} listType="custom" />
           </>
         )}
       </IonContent>

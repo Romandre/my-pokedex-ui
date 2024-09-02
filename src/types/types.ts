@@ -7,6 +7,7 @@ export interface PokemonPagePageProps
 
 export type PokemonData = {
   id: number;
+  userId?: number;
   name: string;
   weight: number;
   forms?: Forms[];
@@ -16,6 +17,7 @@ export type PokemonData = {
   };
   abilities?: Abilities[];
   types?: Types[];
+  private?: number;
 };
 
 export type CustomPokemonFormProps = {
@@ -27,7 +29,8 @@ export type CustomPokemon = {
   userId?: number;
   name: string;
   weight?: number | null;
-  abilities?: Abilities[];
+  mainAbility?: string;
+  secondAbility?: string;
   isPrivate?: boolean;
 };
 
