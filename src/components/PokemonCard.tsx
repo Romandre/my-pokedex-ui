@@ -1,19 +1,13 @@
-import { useContext } from "react";
-import PokeContext from "../contexts/PokeContext";
-import { IonBadge, IonCard, IonIcon, IonRouterLink } from "@ionic/react";
+import { IonCard, IonRouterLink } from "@ionic/react";
 
 import { css } from "../../styled-system/css";
-import { heartOutline, heartSharp } from "ionicons/icons";
-import { Pokemon } from "../types/types";
 import HeartBadge from "./HeartBadge";
 
 export interface PokemonCardProps {
-  pokemon: Pokemon;
+  pokemon: string;
 }
 
 const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
-  const pokeName = pokemon.name;
-
   return (
     <IonCard
       className={css({
@@ -21,9 +15,9 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
         borderBottom: "2px solid var(--ion-color-primary)",
       })}
     >
-      <HeartBadge pokemonName={pokeName} />
+      <HeartBadge pokemonName={pokemon} />
       <IonRouterLink
-        routerLink={`/pokemon/${pokeName}`}
+        routerLink={`/pokemon/${pokemon}`}
         className={css({
           display: "block",
           height: "100px",
@@ -36,11 +30,11 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
             display: "block",
             margin: "0 auto",
           })}
-          src={`https://img.pokemondb.net/artwork/${pokeName}.jpg`}
+          src={`https://img.pokemondb.net/artwork/${pokemon}.jpg`}
         />
       </IonRouterLink>
       <IonRouterLink
-        routerLink={`/pokemon/${pokeName}`}
+        routerLink={`/pokemon/${pokemon}`}
         className={css({
           display: "block",
           padding: "4px",
@@ -61,7 +55,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
             letterSpacing: "1px",
           })}
         >
-          <p>{pokeName}</p>
+          <p>{pokemon}</p>
         </div>
       </IonRouterLink>
     </IonCard>

@@ -10,16 +10,14 @@ import axios from "axios";
 import AuthContext from "./AuthContext";
 
 import { toast } from "react-toastify";
-
-import { Pokemon } from "../types/types";
-
-interface PokemonItem {
-  pokemon: string;
-}
+import { CustomPokemon } from "../types/types";
 
 const PokeContext = createContext({
-  pokemons: [] as Pokemon[],
+  pokemons: [] as string[],
   favouritePokemons: [] as string[],
+  customPokemons: [] as CustomPokemon[],
+  createMyCustomPokemon: (data: CustomPokemon) => {},
+  removeMyCustomPokemon: (pokemon: string) => {},
   addToFavourites: (pokemon: string) => {},
   removeFromFavourites: (pokemon: string) => {},
   flushFavourites: () => {},
@@ -28,8 +26,9 @@ const PokeContext = createContext({
 
 export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
   const { user, isAuthenticated } = useContext(AuthContext);
-  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-  const [favouritePokemons, setFavouritepokemons] = useState<string[]>([]);
+  const [pokemons, setPokemons] = useState<string[]>([]);
+  const [customPokemons, setCustomPokemons] = useState<CustomPokemon[]>([]);
+  const [favouritePokemons, setFavouritePokemons] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const userId = user?.id;
@@ -49,14 +48,87 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
           "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0"
         );
         const data = response.data.results;
+        const names = data.map(
+          (item: { name: string; url: string }) => item.name
+        );
 
-        localStorage.setItem("pokemons", JSON.stringify(data));
-        setPokemons(data);
+        localStorage.setItem("pokemons", JSON.stringify(names));
+        setPokemons(names);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
     }
   }, [setPokemons, setIsLoading]);
+
+  // Fetch user custom pokemons
+  const fetchMyCustomPokemons = useCallback(async () => {
+    const storedCustomPoke = JSON.parse(
+      localStorage.getItem(`customPoke`) || "[]"
+    );
+
+    try {
+      const response = await axios.get(
+        `${apiUrl}api/custompokemon/get/${userId}`
+      );
+      const data = response.data;
+
+      localStorage.setItem("customPoke", JSON.stringify(data));
+      setCustomPokemons(data);
+    } catch (error) {
+      console.error("Error fetching custom pokemons: ", error);
+      setCustomPokemons(storedCustomPoke);
+    }
+  }, [userId, setCustomPokemons]);
+
+  // Create new custom Pokémon
+  const createMyCustomPokemon = async (pokemon: CustomPokemon) => {
+    const { name, weight, abilities, isPrivate } = pokemon;
+
+    const newPokemon = {
+      id: customPokemons.length + 1,
+      userId: userId,
+      name: name,
+      weight: weight ? weight : 0,
+      abilities: abilities,
+      private: isPrivate ? 1 : 0,
+    };
+
+    await axios
+      .post(`${apiUrl}api/custompokemon/add`, newPokemon)
+      .then((res) => {
+        const token = res?.data;
+        if (!token) {
+          console.error("Token is missing");
+        } else {
+          const updatedCustomPokemons = [...customPokemons, newPokemon];
+          setCustomPokemons(updatedCustomPokemons);
+          localStorage.setItem(
+            "customPoke",
+            JSON.stringify(updatedCustomPokemons)
+          );
+          toast.success(res.data);
+        }
+      })
+      .catch((error) => {
+        toast.error(error.response.data);
+      });
+  };
+
+  // Remove custom Pokémon
+  const removeMyCustomPokemon = (pokemon: string) => {
+    const data = { userId: userId, name: pokemon };
+
+    axios.post(`${apiUrl}api/custompokemon/remove`, data).catch((error) => {
+      toast.success(error);
+    });
+
+    const updatedCustomPokemons = customPokemons.filter(
+      (item) => item.name !== pokemon
+    );
+
+    setCustomPokemons(updatedCustomPokemons);
+    localStorage.setItem("customPoke", JSON.stringify(updatedCustomPokemons));
+  };
 
   // Fetch favourite pokemons for specific user
   const fetchFavourites = useCallback(async () => {
@@ -65,15 +137,17 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
     );
 
     try {
-      const response = await axios.get(`${apiUrl}api/getfavourites/${userId}`);
+      const response = await axios.get(`${apiUrl}api/favourites/get/${userId}`);
       const data = response.data;
 
       if (data) {
-        const favouritesFromDb = data.map((item: PokemonItem) => item.pokemon);
-        const mergeData: string[] = favouritesLocal.concat(favouritesFromDb);
+        const favouritesFromDb = data.map(
+          (item: { pokemon: string }) => item.pokemon
+        );
+        const mergeData: string[] = favouritesFromDb.concat(favouritesLocal);
         const unifyData: string[] = [...new Set(mergeData)];
 
-        setFavouritepokemons(unifyData);
+        setFavouritePokemons(unifyData);
         localStorage.setItem(
           `favourites_user${userId}`,
           JSON.stringify(unifyData)
@@ -81,20 +155,20 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
       }
     } catch (error) {
       console.error("Error fetching data from server: ", error);
-      setFavouritepokemons(favouritesLocal);
+      setFavouritePokemons(favouritesLocal);
     }
-  }, [userId, setFavouritepokemons]);
+  }, [userId, setFavouritePokemons]);
 
   // Add pokemon to your favourites
   const addToFavourites = (pokemon: string) => {
     const data = { userId: userId, pokemon: pokemon };
 
-    axios.post(`${apiUrl}api/addfavourites`, data).catch((error) => {
+    axios.post(`${apiUrl}api/favourites/add`, data).catch((error) => {
       console.error("Error:", error);
     });
 
     const updatedFavourites = [...favouritePokemons, pokemon];
-    setFavouritepokemons(updatedFavourites);
+    setFavouritePokemons(updatedFavourites);
     localStorage.setItem(
       `favourites_user${userId}`,
       JSON.stringify(updatedFavourites)
@@ -105,7 +179,7 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
   const removeFromFavourites = (pokemon: string) => {
     const data = { userId: userId, pokemon: pokemon };
 
-    axios.post(`${apiUrl}api/removefavourites`, data).catch((error) => {
+    axios.post(`${apiUrl}api/favourites/remove`, data).catch((error) => {
       console.error("Error:", error);
     });
 
@@ -113,19 +187,20 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
       (item) => item !== pokemon
     );
 
-    setFavouritepokemons(updatedFavourites);
+    setFavouritePokemons(updatedFavourites);
     localStorage.setItem(
       `favourites_user${userId}`,
       JSON.stringify(updatedFavourites)
     );
   };
 
+  // Flush favourites table
   const flushFavourites = () => {
     localStorage.removeItem(`favourites_user${user?.id}`);
-    setFavouritepokemons([]);
+    setFavouritePokemons([]);
 
     axios
-      .delete(`${apiUrl}api/auth/deletefavourites`)
+      .delete(`${apiUrl}api/favourites/removeall`)
       .then((res) => {
         if (!res.data) {
           toast.error("Something went wrong! Try again...");
@@ -141,9 +216,10 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
   const syncFavourites = () => {};
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && userId) {
       setIsLoading(true);
       fetchAllPokemons();
+      fetchMyCustomPokemons();
       fetchFavourites();
       //syncFavourites();
 
@@ -158,6 +234,9 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
     () => ({
       pokemons,
       favouritePokemons,
+      customPokemons,
+      createMyCustomPokemon,
+      removeMyCustomPokemon,
       addToFavourites,
       removeFromFavourites,
       flushFavourites,
@@ -166,6 +245,9 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
     [
       pokemons,
       favouritePokemons,
+      customPokemons,
+      createMyCustomPokemon,
+      removeMyCustomPokemon,
       addToFavourites,
       removeFromFavourites,
       flushFavourites,

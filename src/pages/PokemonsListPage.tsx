@@ -11,21 +11,17 @@ import PokeContext from "../contexts/PokeContext";
 import PokemonsList from "../components/PokemonsList";
 import Loading from "../components/Loading";
 
-import { Pokemon } from "../types/types";
-
 import { css } from "../../styled-system/css";
 
-const FavouritesPage: React.FC = () => {
-  const { pokemons } = useContext(PokeContext);
+const PokemonsListPage: React.FC = () => {
+  const { pokemons, isLoading } = useContext(PokeContext);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [searchResult, setSearchResult] = useState<Pokemon[]>([]);
-
-  const { isLoading } = useContext(PokeContext);
+  const [searchResult, setSearchResult] = useState<string[]>([]);
 
   const startSearch = (value: string) => {
     setSearchQuery(value);
     if (value.length) {
-      const result = pokemons.filter((item) => item.name.includes(value));
+      const result = pokemons.filter((item) => item.includes(value));
       setSearchResult(result);
     } else {
       setSearchResult([]);
@@ -70,4 +66,4 @@ const FavouritesPage: React.FC = () => {
   );
 };
 
-export default FavouritesPage;
+export default PokemonsListPage;

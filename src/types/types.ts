@@ -1,26 +1,39 @@
 import { RouteComponentProps } from "react-router";
 
-export type Pokemon = {
-  name: string;
-  url?: string;
-};
+export interface PokemonPagePageProps
+  extends RouteComponentProps<{
+    name: string;
+  }> {}
 
 export type PokemonData = {
   id: number;
   name: string;
   weight: number;
-  forms: Forms[];
+  forms?: Forms[];
   cries?: {
     latest?: string;
     legacy?: string;
   };
-  abilities: Abilities[];
-  types: Types[];
+  abilities?: Abilities[];
+  types?: Types[];
+};
+
+export type CustomPokemonFormProps = {
+  onSubmit: (data: CustomPokemon) => void;
+};
+
+export type CustomPokemon = {
+  id: number;
+  userId?: number;
+  name: string;
+  weight?: number | null;
+  abilities?: Abilities[];
+  isPrivate?: boolean;
 };
 
 type Abilities = {
-  ability: { name: string; url: string };
-  is_hidden: boolean;
+  ability: { name: string; url?: string };
+  is_hidden?: boolean;
   slot?: number;
 };
 
@@ -53,8 +66,3 @@ export type SignInFormProps = {
   changeForm: () => void;
   isButtonLoading: boolean;
 };
-
-export interface PokemonPagePageProps
-  extends RouteComponentProps<{
-    name: string;
-  }> {}

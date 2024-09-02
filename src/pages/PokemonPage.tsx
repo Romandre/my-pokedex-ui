@@ -1,5 +1,7 @@
 import {
+  IonAlert,
   IonBackButton,
+  IonButton,
   IonButtons,
   IonCard,
   IonContent,
@@ -8,20 +10,29 @@ import {
   IonRouterLink,
   IonTitle,
   IonToolbar,
+  useIonRouter,
 } from "@ionic/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import axios from "axios";
+
+import PokeContext from "../contexts/PokeContext";
+import HeartBadge from "../components/HeartBadge";
+import Loading from "../components/Loading";
 
 import { css } from "../../styled-system/css";
 import { caretBack } from "ionicons/icons";
 
 import { PokemonData, PokemonPagePageProps } from "../types/types";
-import HeartBadge from "../components/HeartBadge";
 
 const PokemonPage: React.FC<PokemonPagePageProps> = ({ match }) => {
   const [pokemon, setPokemon] = useState<PokemonData | null>();
+  const [isCustom, setIsCustom] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const currentPokemon = match.params.name;
 
-  console.log(pokemon);
+  const router = useIonRouter();
+
+  const { customPokemons, removeMyCustomPokemon } = useContext(PokeContext);
 
   const imageBlock = css({
     height: "280px",
@@ -69,9 +80,10 @@ const PokemonPage: React.FC<PokemonPagePageProps> = ({ match }) => {
     textTransform: "capitalize",
   });
 
-  const fetchPokemons = useCallback(() => {
-    axios
-      .get(`https://pokeapi.co/api/v2/pokemon/${match.params.name}`)
+  const fetchPokemon = useCallback(async () => {
+    setIsLoading(true);
+    await axios
+      .get(`https://pokeapi.co/api/v2/pokemon/${currentPokemon}`)
       .then((res) => {
         const pokemonData: PokemonData = {
           id: res.data.id,
@@ -82,14 +94,39 @@ const PokemonPage: React.FC<PokemonPagePageProps> = ({ match }) => {
           abilities: res.data.abilities,
           types: res.data.types,
         };
-        console.log(pokemonData);
+
         setPokemon(pokemonData);
+      })
+      .catch((err) => {
+        console.log(err);
       });
-  }, []);
+    setIsLoading(false);
+  }, [setPokemon, setIsLoading]);
+
+  const deletePokemon = (name: string) => {
+    removeMyCustomPokemon(pokemon!.name);
+    router.push("/custom", "back");
+  };
 
   useEffect(() => {
-    fetchPokemons();
-  }, [fetchPokemons]);
+    const customPokemonData = customPokemons.filter(
+      (item) => item.name === currentPokemon
+    );
+
+    if (customPokemonData.length) {
+      const pokemonData: PokemonData = {
+        id: customPokemonData[0].id,
+        name: customPokemonData[0].name,
+        weight: customPokemonData[0].weight || 0,
+        abilities: customPokemonData[0].abilities,
+      };
+
+      setPokemon(pokemonData);
+      setIsCustom(true);
+    } else {
+      fetchPokemon();
+    }
+  }, [fetchPokemon, customPokemons]);
 
   return (
     <IonPage>
@@ -109,95 +146,131 @@ const PokemonPage: React.FC<PokemonPagePageProps> = ({ match }) => {
       </IonHeader>
 
       <IonContent>
-        {pokemon && Object.keys(pokemon).length ? (
-          <>
-            <div className={imageBlock}>
-              <div className={imageWrapper}>
-                <img
-                  height="100%"
-                  src={`https://img.pokemondb.net/artwork/${pokemon?.name}.jpg`}
-                />
-                <HeartBadge pokemonName={pokemon.name} />
-              </div>
-            </div>
-            <div
-              className={css({
-                padding: "0 12px",
-              })}
-            >
-              <div
-                className={css({
-                  width: "100%",
-                  textAlign: "center",
-                })}
-              >
-                <div className={nameWrapper}>{pokemon.name}</div>
-              </div>
-              <IonCard className={pokemonInfoCard}>
-                <div className={pokemonInfoSection}>
-                  <b>ID: </b>
-                  {pokemon?.id}
-                </div>
-                <div className={pokemonInfoSection}>
-                  <b>Weight: </b>
-                  {pokemon?.weight}
-                </div>
-                <div className={pokemonInfoSection}>
-                  <b>Abilities: </b>
-                  {pokemon?.abilities?.map((item) => (
-                    <div key={item.ability.name}>
-                      <span>- {item.ability.name}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className={pokemonInfoSection}>
-                  <b>Cries: </b>
-                  {pokemon?.cries &&
-                    Object.entries(pokemon?.cries).map((item) => (
-                      <div key={item[0]}>
-                        <span>- {item[0]}</span>
-                        <audio controls>
-                          <source src={item[1]} type="audio/mpeg"></source>
-                          Your browser does not support the
-                          <code>audio</code> element.
-                        </audio>
-                      </div>
-                    ))}
-                </div>
-                <div className={pokemonInfoSection}>
-                  <b>Forms: </b>
-                  <p
-                    className={css({
-                      textTransform: "none",
-                    })}
-                  >
-                    This pokemon has {pokemon?.forms?.length && "only "}
-                    {pokemon?.forms?.length}
-                    {pokemon?.forms?.length! > 1 ? " forms" : "form"}
-                  </p>
-                  {pokemon?.forms?.map((item) => (
-                    <div key={item.name}>
-                      <span>- {item.name}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className={pokemonInfoSection}>
-                  <b>Types: </b>
-                  {pokemon?.types?.map((item) => (
-                    <div key={item.type.name}>
-                      <span>- {item.type.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </IonCard>
-            </div>
-          </>
+        {isLoading ? (
+          <Loading />
         ) : (
           <>
-            <h3>Sorry, no such pokemon found...</h3>
-            <IonRouterLink routerLink={`/pokemons`}>
-              <p>Visit Pokémons here</p>
-            </IonRouterLink>
+            {pokemon && Object.keys(pokemon).length ? (
+              <>
+                <div className={imageBlock}>
+                  <div className={imageWrapper}>
+                    <img
+                      height="100%"
+                      src={`https://img.pokemondb.net/artwork/${pokemon?.name}.jpg`}
+                    />
+                    <HeartBadge pokemonName={pokemon.name} />
+                  </div>
+                </div>
+                <div
+                  className={css({
+                    padding: "0 12px",
+                  })}
+                >
+                  <div
+                    className={css({
+                      width: "100%",
+                      textAlign: "center",
+                    })}
+                  >
+                    <div className={nameWrapper}>{pokemon.name}</div>
+                  </div>
+                  <IonCard className={pokemonInfoCard}>
+                    <div className={pokemonInfoSection}>
+                      <b>ID: </b>
+                      {pokemon?.id}
+                    </div>
+
+                    <div className={pokemonInfoSection}>
+                      <b>Weight: </b>
+                      {pokemon?.weight}
+                    </div>
+
+                    <div className={pokemonInfoSection}>
+                      <b>Abilities: </b>
+                      {pokemon?.abilities?.map((item) => (
+                        <div key={item.ability.name}>
+                          <span>- {item.ability.name}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className={pokemonInfoSection}>
+                      <b>Cries: </b>
+                      {pokemon?.cries &&
+                        Object.entries(pokemon?.cries).map((item) => (
+                          <div key={item[0]}>
+                            <span>- {item[0]}</span>
+                            <audio controls>
+                              <source src={item[1]} type="audio/mpeg"></source>
+                              Your browser does not support the
+                              <code>audio</code> element.
+                            </audio>
+                          </div>
+                        ))}
+                    </div>
+
+                    <div className={pokemonInfoSection}>
+                      <b>Forms: </b>
+                      <p
+                        className={css({
+                          textTransform: "none",
+                        })}
+                      >
+                        This pokemon has {pokemon?.forms?.length && "only "}
+                        {pokemon?.forms?.length}
+                        {pokemon?.forms?.length! > 1 ? " forms" : "form"}
+                      </p>
+                      {pokemon?.forms?.map((item) => (
+                        <div key={item.name}>
+                          <span>- {item.name}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className={pokemonInfoSection}>
+                      <b>Types: </b>
+                      {pokemon?.types?.map((item) => (
+                        <div key={item.type.name}>
+                          <span>- {item.type.name}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {isCustom && (
+                      <>
+                        <div className={pokemonInfoSection}>
+                          <IonButton color="danger" id="show-alert">
+                            Delete Pokémon
+                          </IonButton>
+                        </div>
+                        <IonAlert
+                          trigger="show-alert"
+                          header="Really want to logout?"
+                          buttons={[
+                            {
+                              text: "No",
+                            },
+                            {
+                              text: "Yes",
+                              handler: () => {
+                                deletePokemon(pokemon.name);
+                              },
+                            },
+                          ]}
+                        ></IonAlert>
+                      </>
+                    )}
+                  </IonCard>
+                </div>
+              </>
+            ) : (
+              <>
+                <h3>Sorry, no such pokemon found...</h3>
+                <IonRouterLink routerLink={`/pokemons`}>
+                  <p>Visit Pokémons here</p>
+                </IonRouterLink>
+              </>
+            )}
           </>
         )}
       </IonContent>

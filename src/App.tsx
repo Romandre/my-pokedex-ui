@@ -22,6 +22,7 @@ import FavouritesPage from "./pages/FavouritesPage";
 import PokemonPage from "./pages/PokemonPage";
 import ProfilePage from "./pages/ProfilePage";
 import SignInPage from "./pages/SignInPage";
+import CustomPokemonsPage from "./pages/CustomPokemonsPage";
 
 /* Icons */
 import { home, heart, person, list } from "ionicons/icons";
@@ -63,6 +64,7 @@ const App: React.FC = () => {
               <Route path="/pokemon/:name" component={PokemonPage} exact />
               <Route path="/favourites" component={FavouritesPage} exact />
               <Route path="/profile" component={ProfilePage} exact />
+              <Route path="/custom" component={CustomPokemonsPage} exact />
               <Route path="/" render={() => <Redirect to="/home" />} exact />
               <Route
                 path="/signin"

@@ -7,11 +7,12 @@ import {
 } from "@ionic/react";
 import { useContext } from "react";
 import PokeContext from "../contexts/PokeContext";
-import FavouritesList from "../components/FavouritesList";
+import PokemonsList from "../components/PokemonsList";
 import Loading from "../components/Loading";
+import { css } from "../../styled-system/css";
 
 const FavouritesPage: React.FC = () => {
-  const { isLoading } = useContext(PokeContext);
+  const { favouritePokemons, isLoading } = useContext(PokeContext);
 
   return (
     <IonPage>
@@ -20,7 +21,18 @@ const FavouritesPage: React.FC = () => {
           <IonTitle>Personal Pokédex</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>{isLoading ? <Loading /> : <FavouritesList />}</IonContent>
+      <IonContent>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <p className={css({ margin: "12px 0", fontSize: "24px" })}>
+              Favourite Pokémons
+            </p>
+            <PokemonsList pokemons={favouritePokemons} listType="favourite" />
+          </>
+        )}
+      </IonContent>
     </IonPage>
   );
 };

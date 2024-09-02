@@ -9,7 +9,7 @@ import {
 import { css } from "../../styled-system/css";
 import { useRef, useState } from "react";
 import { eyeOffSharp, eyeSharp } from "ionicons/icons";
-import { SignInFormProps, UserAuth } from "../types/types";
+import { SignInFormProps } from "../types/types";
 
 const LoginForm: React.FC<SignInFormProps> = ({
   user,

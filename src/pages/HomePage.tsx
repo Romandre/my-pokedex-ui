@@ -25,7 +25,7 @@ const HomePage: React.FC = () => {
     display: "inline-block",
     width: "100%",
     height: "160px",
-    marginBottom: "18px",
+    marginBottom: "12px",
     padding: "16px",
     md: { width: "calc(50% - 10px)", _odd: { marginRight: "20px" } },
     lg: {
@@ -55,7 +55,7 @@ const HomePage: React.FC = () => {
           <IonTitle>Personal Pokédex</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className={css({})}>
+      <IonContent>
         {isLoading ? (
           <Loading />
         ) : (
@@ -77,7 +77,7 @@ const HomePage: React.FC = () => {
                 })}
               ></img>
               <div className={blockTextCss}>
-                Check all <br /> Pokémons
+                Explore all <br /> Pokémons
               </div>
             </IonCard>
 
@@ -106,8 +106,7 @@ const HomePage: React.FC = () => {
               className={css(blockStyle, {
                 bg: "linear-gradient(135deg, #0cb5c8 20%, #ff82cb 90%)",
               })}
-              routerLink={`/create`}
-              disabled
+              routerLink={`/custom`}
             >
               <img
                 src={jigglypuff}
@@ -119,8 +118,8 @@ const HomePage: React.FC = () => {
                 })}
               ></img>
               <div className={blockTextCss}>
-                Create your <br />
-                own Pokémon
+                Manage castom <br />
+                Pokémons
                 <p className={css({ fontSize: "16px", fontStyle: "italic" })}>
                   Under construction...
                 </p>
@@ -144,8 +143,8 @@ const HomePage: React.FC = () => {
                 })}
               ></img>
               <div className={blockTextCss}>
-                Leave review <br />
-                for Pokémon
+                View what other <br />
+                users created
                 <p className={css({ fontSize: "16px", fontStyle: "italic" })}>
                   Under construction...
                 </p>
