@@ -71,9 +71,11 @@ const PokemonsList: React.FC<PokemonsListProps> = ({
       ) : (
         <>
           <h3>You don't have {listType} pokemons yet.</h3>
-          <IonRouterLink routerLink={`/pokemons`}>
-            <p>Visit Pokémons list first</p>
-          </IonRouterLink>
+          {listType !== "custom" && (
+            <IonRouterLink routerLink={`/pokemons`}>
+              <p>Visit Pokémons list first</p>
+            </IonRouterLink>
+          )}
         </>
       )}
     </>
