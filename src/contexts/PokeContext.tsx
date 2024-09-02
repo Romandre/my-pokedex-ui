@@ -122,6 +122,8 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
 
     setCustomPokemons(updatedCustomPokemons);
     localStorage.setItem("customPoke", JSON.stringify(updatedCustomPokemons));
+
+    removeFromFavourites(pokemon);
   };
 
   // Flush all custom Pokémons for specific user
