@@ -258,7 +258,7 @@ const PokemonPage: React.FC<PokemonPagePageProps> = ({ match }) => {
                         </div>
                         <IonAlert
                           trigger="show-alert"
-                          header="Really want to logout?"
+                          header="Really want to delete pokemon?"
                           buttons={[
                             {
                               text: "No",
