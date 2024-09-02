@@ -119,9 +119,9 @@ const PokemonPage: React.FC<PokemonPagePageProps> = ({ match }) => {
         setPokemon(pokemonData);
         setIsCustom(true);
         setIsLoading(false);
-      } else {
-        fetchPokemon();
       }
+    } else {
+      fetchPokemon();
     }
   }, [setIsLoading, setIsCustom, setPokemon, fetchPokemon, customPokemons]);
 
@@ -156,7 +156,7 @@ const PokemonPage: React.FC<PokemonPagePageProps> = ({ match }) => {
           <Loading />
         ) : (
           <>
-            {pokemon && Object.keys(pokemon).length ? (
+            {pokemon ? (
               <>
                 <div className={imageBlock}>
                   <div className={imageWrapper}>
