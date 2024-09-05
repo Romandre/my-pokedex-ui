@@ -22,6 +22,7 @@ const PokemonsListPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchResult, setSearchResult] = useState<string[]>([]);
   const [sorting, setSorting] = useState<string>("");
+  const [searchSorting, setSearchSorting] = useState<string>("");
 
   const startSearch = (value: string) => {
     setSearchQuery(value);
@@ -30,6 +31,7 @@ const PokemonsListPage: React.FC = () => {
       setSearchResult(result);
     } else {
       setSearchResult([]);
+      setSearchSorting("");
     }
   };
 
@@ -81,14 +83,18 @@ const PokemonsListPage: React.FC = () => {
               <>
                 <PokemonsList
                   pokemons={searchResult.length ? searchResult : pokemons}
-                  sorting={sorting}
+                  sorting={searchResult.length ? searchSorting : sorting}
                 />
                 <IonPopover
                   trigger="sorting"
                   dismissOnSelect={true}
                   showBackdrop={false}
                 >
-                  <SortingMenu setSorting={setSorting}></SortingMenu>
+                  <SortingMenu
+                    setSorting={
+                      searchResult.length ? setSearchSorting : setSorting
+                    }
+                  ></SortingMenu>
                 </IonPopover>
               </>
             )}
