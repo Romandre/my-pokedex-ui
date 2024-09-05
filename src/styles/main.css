@@ -1,5 +1,6 @@
 :root {
   --ion-color-primary: #0eb6c5e8;
+  --ion-color-contrast-rgb: white;
 }
 
 ion-app {
@@ -34,6 +35,14 @@ ion-backdrop {
 ion-spinner#main {
   width: 100px;
   height: 100px;
+}
+
+ion-toolbar {
+  display: flex;
+}
+
+.ios ion-toolbar {
+  height: 52px;
 }
 
 /* Keep search bar with same padding in ios and android */

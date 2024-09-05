@@ -1,23 +1,27 @@
+import { useContext, useState } from "react";
 import {
   IonContent,
   IonHeader,
+  IonIcon,
   IonPage,
+  IonPopover,
   IonSearchbar,
-  IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { useContext, useState } from "react";
 
 import PokeContext from "../contexts/PokeContext";
 import PokemonsList from "../components/PokemonsList";
 import Loading from "../components/Loading";
 
 import { css } from "../../styled-system/css";
+import { filterOutline } from "ionicons/icons";
+import SortingMenu from "../components/SortingMenu";
 
 const PokemonsListPage: React.FC = () => {
   const { pokemons, isLoading } = useContext(PokeContext);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchResult, setSearchResult] = useState<string[]>([]);
+  const [sorting, setSorting] = useState<string>("");
 
   const startSearch = (value: string) => {
     setSearchQuery(value);
@@ -33,16 +37,37 @@ const PokemonsListPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar color={"primary"}>
-          <IonSearchbar
-            animated={true}
-            placeholder="Search Pokémon"
-            value={searchQuery}
-            debounce={100}
-            onIonInput={(e) => startSearch(e.target.value as string)}
+          <div
             className={css({
-              padding: "8px 12px",
+              display: "flex",
+              alignItems: "center",
             })}
-          ></IonSearchbar>
+          >
+            <div
+              className={css({
+                width: "calc(100% - 36px)",
+              })}
+            >
+              <IonSearchbar
+                animated={true}
+                placeholder="Search Pokémon"
+                value={searchQuery}
+                debounce={100}
+                onIonInput={(e) => startSearch(e.target.value as string)}
+                className={css({
+                  padding: "8px 12px",
+                })}
+              ></IonSearchbar>
+            </div>
+            <div
+              className={css({
+                width: "36px",
+                fontSize: "26px",
+              })}
+            >
+              <IonIcon id="sorting" icon={filterOutline}></IonIcon>
+            </div>
+          </div>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -53,9 +78,19 @@ const PokemonsListPage: React.FC = () => {
             {isLoading ? (
               <Loading />
             ) : (
-              <PokemonsList
-                pokemons={searchResult.length ? searchResult : pokemons}
-              />
+              <>
+                <PokemonsList
+                  pokemons={searchResult.length ? searchResult : pokemons}
+                  sorting={sorting}
+                />
+                <IonPopover
+                  trigger="sorting"
+                  dismissOnSelect={true}
+                  showBackdrop={false}
+                >
+                  <SortingMenu setSorting={setSorting}></SortingMenu>
+                </IonPopover>
+              </>
             )}
           </>
         )}

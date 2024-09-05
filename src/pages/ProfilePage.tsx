@@ -4,10 +4,7 @@ import {
   IonButton,
   IonCard,
   IonContent,
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
 } from "@ionic/react";
 import { useContext } from "react";
 import { useIonRouter } from "@ionic/react";

@@ -15,20 +15,35 @@ import { css } from "../../styled-system/css";
 type PokemonsListProps = {
   pokemons: string[];
   listType?: string;
+  sorting?: string;
 };
 
 const PokemonsList: React.FC<PokemonsListProps> = ({
   pokemons,
   listType = "all",
+  sorting,
 }) => {
   const pokemonInView = 60;
   const [offset, setOffset] = useState<number>(pokemonInView);
   const [viewedPokemons, setViewedpokemons] = useState<string[]>([]);
 
   const loadPokemons = useCallback(() => {
-    const section = pokemons.slice(0, offset);
+    let pokemonsList = [...pokemons];
+
+    /* Perform sorting */
+    if (sorting === "reverse") {
+      pokemonsList = [...pokemons].reverse();
+    }
+    if (sorting === "alphabet") {
+      pokemonsList = pokemonsList.sort((a, b) => a.localeCompare(b));
+    }
+    if (sorting === "alpharev") {
+      pokemonsList = pokemonsList.sort((a, b) => a.localeCompare(b)).reverse();
+    }
+
+    const section = pokemonsList.slice(0, offset);
     setViewedpokemons(section);
-  }, [offset, pokemons]);
+  }, [offset, pokemons, sorting]);
 
   useEffect(() => {
     loadPokemons();
