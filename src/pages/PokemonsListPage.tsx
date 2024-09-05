@@ -11,11 +11,11 @@ import {
 
 import PokeContext from "../contexts/PokeContext";
 import PokemonsList from "../components/PokemonsList";
+import SortingMenu from "../components/SortingMenu";
 import Loading from "../components/Loading";
 
 import { css } from "../../styled-system/css";
-import { filterOutline } from "ionicons/icons";
-import SortingMenu from "../components/SortingMenu";
+import { funnelOutline } from "ionicons/icons";
 
 const PokemonsListPage: React.FC = () => {
   const { pokemons, isLoading } = useContext(PokeContext);
@@ -67,7 +67,7 @@ const PokemonsListPage: React.FC = () => {
                 fontSize: "26px",
               })}
             >
-              <IonIcon id="sorting" icon={filterOutline}></IonIcon>
+              <IonIcon id="sorting" icon={funnelOutline}></IonIcon>
             </div>
           </div>
         </IonToolbar>

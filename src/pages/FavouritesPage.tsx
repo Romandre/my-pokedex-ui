@@ -1,3 +1,4 @@
+import { useContext, useState } from "react";
 import {
   IonContent,
   IonHeader,
@@ -7,7 +8,6 @@ import {
   IonToolbar,
   useIonRouter,
 } from "@ionic/react";
-import { useContext, useState } from "react";
 
 import PokeContext from "../contexts/PokeContext";
 import PokemonsList from "../components/PokemonsList";
@@ -15,7 +15,7 @@ import SortingMenu from "../components/SortingMenu";
 import Loading from "../components/Loading";
 
 import { css } from "../../styled-system/css";
-import { caretBack, filterOutline } from "ionicons/icons";
+import { caretBack, funnelOutline } from "ionicons/icons";
 
 const FavouritesPage: React.FC = () => {
   const { favouritePokemons, isLoading } = useContext(PokeContext);
@@ -73,7 +73,7 @@ const FavouritesPage: React.FC = () => {
                   fontSize: "26px",
                 })}
               >
-                <IonIcon id="fav-sorting" icon={filterOutline}></IonIcon>
+                <IonIcon id="sorting" icon={funnelOutline}></IonIcon>
               </div>
             )}
           </div>
