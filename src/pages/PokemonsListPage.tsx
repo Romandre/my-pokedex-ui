@@ -33,9 +33,6 @@ const PokemonsListPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar color={"primary"}>
-          <IonTitle>Personal Pokédex</IonTitle>
-        </IonToolbar>
-        <IonToolbar>
           <IonSearchbar
             animated={true}
             placeholder="Search Pokémon"

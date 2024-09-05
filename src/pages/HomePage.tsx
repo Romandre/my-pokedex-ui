@@ -48,6 +48,7 @@ const HomePage: React.FC = () => {
     fontWeight: "600",
     lineHeight: "2.2rem",
     color: "white",
+    textShadow: "2px 2px rgba(0,0,0,0.3)",
     fontSmoothing: "antialiased",
   };
 
@@ -132,7 +133,8 @@ const HomePage: React.FC = () => {
                 })}
               ></img>
               <div className={css(blockTextCss)}>
-                Manage custom <br />
+                Create own
+                <br />
                 Pokémons
               </div>
               <div className={css(blockTextCss, blockIconCss)}>
@@ -157,8 +159,8 @@ const HomePage: React.FC = () => {
                 })}
               ></img>
               <div className={css(blockTextCss)}>
-                View what other <br />
-                users created
+                Check other <br />
+                creations
                 <p className={css({ fontSize: "16px", fontStyle: "italic" })}>
                   Under construction...
                 </p>
