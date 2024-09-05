@@ -2,6 +2,7 @@ import {
   IonCard,
   IonContent,
   IonHeader,
+  IonIcon,
   IonPage,
   IonTitle,
   IonToolbar,
@@ -16,6 +17,17 @@ import pikachu from "../assets/pikachu.png";
 import bulbasaur from "../assets/bulbasaur.png";
 import jigglypuff from "../assets/jigglypuff.png";
 import eevee from "../assets/eevee.png";
+import { list } from "postcss";
+import {
+  buildOutline,
+  buildSharp,
+  heartOutline,
+  heartSharp,
+  listOutline,
+  settings,
+  settingsOutline,
+  settingsSharp,
+} from "ionicons/icons";
 
 const HomePage: React.FC = () => {
   const { isLoading } = useContext(PokeContext);
@@ -39,13 +51,19 @@ const HomePage: React.FC = () => {
     },
   };
 
-  const blockTextCss = css({
-    display: "inline",
+  const blockTextCss = {
+    display: "block",
     fontSize: "28px",
-    fontWeight: "800",
-    lineHeight: "2.5rem",
+    fontWeight: "600",
+    lineHeight: "2.2rem",
     color: "white",
-  });
+    fontSmoothing: "antialiased",
+  };
+
+  const blockIconCss = {
+    marginTop: "8px",
+    fontSize: "34px",
+  };
 
   return (
     <IonPage>
@@ -75,8 +93,11 @@ const HomePage: React.FC = () => {
                   width: "210px",
                 })}
               ></img>
-              <div className={blockTextCss}>
+              <div className={css(blockTextCss)}>
                 Explore all <br /> Pokémons
+              </div>
+              <div className={css(blockTextCss, blockIconCss)}>
+                <IonIcon icon={listOutline}></IonIcon>
               </div>
             </IonCard>
 
@@ -95,9 +116,12 @@ const HomePage: React.FC = () => {
                   width: "250px",
                 })}
               ></img>
-              <div className={blockTextCss}>
+              <div className={css(blockTextCss)}>
                 View your <br />
                 favourites
+              </div>
+              <div className={css(blockTextCss, blockIconCss)}>
+                <IonIcon icon={heartSharp}></IonIcon>
               </div>
             </IonCard>
 
@@ -116,9 +140,12 @@ const HomePage: React.FC = () => {
                   width: "180px",
                 })}
               ></img>
-              <div className={blockTextCss}>
+              <div className={css(blockTextCss)}>
                 Manage custom <br />
                 Pokémons
+              </div>
+              <div className={css(blockTextCss, blockIconCss)}>
+                <IonIcon icon={buildSharp}></IonIcon>
               </div>
             </IonCard>
 
@@ -138,7 +165,7 @@ const HomePage: React.FC = () => {
                   width: "200px",
                 })}
               ></img>
-              <div className={blockTextCss}>
+              <div className={css(blockTextCss)}>
                 View what other <br />
                 users created
                 <p className={css({ fontSize: "16px", fontStyle: "italic" })}>

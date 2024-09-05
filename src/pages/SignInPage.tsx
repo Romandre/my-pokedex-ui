@@ -100,7 +100,7 @@ const SignInPage: React.FC = () => {
         <div
           className={css({
             position: "relative",
-            top: "50%",
+            bottom: "-45%",
             transform: "translateY(-50%)",
           })}
         >

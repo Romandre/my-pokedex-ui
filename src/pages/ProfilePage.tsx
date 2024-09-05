@@ -31,7 +31,7 @@ const ProfilePage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar color={"primary"}>
-          <IonTitle>Personal Pokédex - Account settings</IonTitle>
+          <IonTitle>Personal Pokédex</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -104,8 +104,8 @@ const ProfilePage: React.FC = () => {
               </IonButton>
               <IonAlert
                 trigger="flush-users"
-                header="Really want to flush users data?"
-                subHeader="Admin user will not be removed!"
+                header="Really want to flush all users from database?"
+                subHeader="All users (except admin) will not be permanently removed!"
                 buttons={[
                   {
                     text: "No",
@@ -122,17 +122,24 @@ const ProfilePage: React.FC = () => {
           )}
 
           <IonButton
+            id="flush-favourites"
+            color={"danger"}
+            className={css({ display: "block", marginTop: "16px" })}
+          >
+            Flush all your favourites
+          </IonButton>
+          <IonButton
             id="flush-pokemons"
             color={"danger"}
             className={css({ display: "block", marginTop: "16px" })}
           >
-            Flush all your favourites & custom pokemons
+            Flush all your custom Pokémons
           </IonButton>
 
           <IonAlert
-            trigger="flush-pokemons"
-            header="Really want to flush favourites and custom pokemons data?"
-            subHeader="All your favourite and custom Pokemons will be removed permanently."
+            trigger="flush-favourites"
+            header="Really want to flush all your favourite Pokémons?"
+            subHeader="All your favourite Pokémons will be removed permanently."
             buttons={[
               {
                 text: "No",
@@ -141,6 +148,21 @@ const ProfilePage: React.FC = () => {
                 text: "Yes",
                 handler: () => {
                   flushFavourites();
+                },
+              },
+            ]}
+          ></IonAlert>
+          <IonAlert
+            trigger="flush-pokemons"
+            header="Really want to flush custom Pokémons data?"
+            subHeader="All your custom Pokemons will be removed permanently."
+            buttons={[
+              {
+                text: "No",
+              },
+              {
+                text: "Yes",
+                handler: () => {
                   flushCustomPokemons();
                 },
               },
