@@ -10,7 +10,7 @@ import axios from "axios";
 import AuthContext from "./AuthContext";
 
 import { toast } from "react-toastify";
-import { CustomPokemon, PokemonData } from "../types/types";
+import { CustomPokemon } from "../types/types";
 
 const PokeContext = createContext({
   pokemons: [] as string[],

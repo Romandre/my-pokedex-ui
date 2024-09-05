@@ -8,26 +8,17 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { useContext } from "react";
-import PokeContext from "../contexts/PokeContext";
 
-import { css } from "../../styled-system/css";
+import PokeContext from "../contexts/PokeContext";
 import Loading from "../components/Loading";
 
 import pikachu from "../assets/pikachu.png";
 import bulbasaur from "../assets/bulbasaur.png";
 import jigglypuff from "../assets/jigglypuff.png";
 import eevee from "../assets/eevee.png";
-import { list } from "postcss";
-import {
-  buildOutline,
-  buildSharp,
-  heartOutline,
-  heartSharp,
-  listOutline,
-  settings,
-  settingsOutline,
-  settingsSharp,
-} from "ionicons/icons";
+
+import { css } from "../../styled-system/css";
+import { buildSharp, heartSharp, listOutline } from "ionicons/icons";
 
 const HomePage: React.FC = () => {
   const { isLoading } = useContext(PokeContext);

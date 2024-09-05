@@ -9,13 +9,14 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { css } from "../../styled-system/css";
 import { useContext } from "react";
 import { useIonRouter } from "@ionic/react";
+
 import AuthContext from "../contexts/AuthContext";
+import PokeContext from "../contexts/PokeContext";
 
 import profile from "../assets/profile.png";
-import PokeContext from "../contexts/PokeContext";
+import { css } from "../../styled-system/css";
 
 const ProfilePage: React.FC = () => {
   const { user, logout, flushUsers } = useContext(AuthContext);

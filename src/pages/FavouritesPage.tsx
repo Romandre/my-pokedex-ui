@@ -6,9 +6,11 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { useContext } from "react";
+
 import PokeContext from "../contexts/PokeContext";
 import PokemonsList from "../components/PokemonsList";
 import Loading from "../components/Loading";
+
 import { css } from "../../styled-system/css";
 
 const FavouritesPage: React.FC = () => {

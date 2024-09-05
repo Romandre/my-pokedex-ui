@@ -9,13 +9,14 @@ import {
 import { css } from "../../styled-system/css";
 import { FormEvent, useContext, useState } from "react";
 import axios from "axios";
+
 import AuthContext from "../contexts/AuthContext";
+import LoginForm from "../components/LoginForm";
+import RegisterForm from "../components/RegisterForm";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import LoginForm from "../components/LoginForm";
-import RegisterForm from "../components/RegisterForm";
 import { UserAuth } from "../types/types";
 
 const SignInPage: React.FC = () => {

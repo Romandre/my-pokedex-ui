@@ -1,5 +1,6 @@
-import { IonBadge, IonIcon } from "@ionic/react";
 import { useContext } from "react";
+import { IonBadge, IonIcon } from "@ionic/react";
+
 import PokeContext from "../contexts/PokeContext";
 
 import { css } from "../../styled-system/css";

@@ -1,7 +1,6 @@
 import {
   IonBadge,
   IonButton,
-  IonButtons,
   IonContent,
   IonHeader,
   IonIcon,
@@ -12,14 +11,15 @@ import {
   useIonActionSheet,
 } from "@ionic/react";
 import { useContext, useEffect, useRef, useState } from "react";
-import PokeContext from "../contexts/PokeContext";
 
+import PokeContext from "../contexts/PokeContext";
 import PokemonsList from "../components/PokemonsList";
 import CustomPokemonForm from "../components/CustomPokemonForm";
 import Loading from "../components/Loading";
 
 import { add } from "ionicons/icons";
 import { css } from "../../styled-system/css";
+
 import { CustomPokemon } from "../types/types";
 
 const CustomPokemonsPage: React.FC = () => {

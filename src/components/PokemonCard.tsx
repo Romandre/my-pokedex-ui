@@ -1,7 +1,6 @@
 import { IonCard, IonRouterLink } from "@ionic/react";
-
-import { css } from "../../styled-system/css";
 import HeartBadge from "./HeartBadge";
+import { css } from "../../styled-system/css";
 
 export interface PokemonCardProps {
   pokemon: string;

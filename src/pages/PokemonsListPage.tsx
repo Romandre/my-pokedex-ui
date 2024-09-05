@@ -7,6 +7,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { useContext, useState } from "react";
+
 import PokeContext from "../contexts/PokeContext";
 import PokemonsList from "../components/PokemonsList";
 import Loading from "../components/Loading";

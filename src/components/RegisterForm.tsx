@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   IonButton,
   IonIcon,
@@ -6,10 +7,11 @@ import {
   IonSpinner,
   IonTitle,
 } from "@ionic/react";
+
 import { css } from "../../styled-system/css";
-import { useState } from "react";
 import { eyeOffSharp, eyeSharp } from "ionicons/icons";
-import { SignInFormProps, UserAuth } from "../types/types";
+
+import { SignInFormProps } from "../types/types";
 
 const RegisterForm: React.FC<SignInFormProps> = ({
   user,

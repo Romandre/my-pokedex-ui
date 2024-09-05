@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import {
   IonButton,
   IonIcon,
@@ -6,8 +7,8 @@ import {
   IonSpinner,
   IonTitle,
 } from "@ionic/react";
+
 import { css } from "../../styled-system/css";
-import { useRef, useState } from "react";
 import { eyeOffSharp, eyeSharp } from "ionicons/icons";
 import { SignInFormProps } from "../types/types";
 

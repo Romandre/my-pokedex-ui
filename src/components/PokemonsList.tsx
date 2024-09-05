@@ -7,9 +7,10 @@ import {
   IonRouterLink,
   IonRow,
 } from "@ionic/react";
-import { css } from "../../styled-system/css";
 
 import PokemonCard from "./PokemonCard";
+
+import { css } from "../../styled-system/css";
 
 type PokemonsListProps = {
   pokemons: string[];
