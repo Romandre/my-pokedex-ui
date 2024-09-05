@@ -64,6 +64,7 @@ const PokemonsListPage: React.FC = () => {
             <div
               className={css({
                 width: "36px",
+                paddingTop: "6px",
                 fontSize: "26px",
               })}
             >

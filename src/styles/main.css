@@ -41,8 +41,12 @@ ion-toolbar {
   display: flex;
 }
 
+/* Adjusting toolbar height for different devices */
 .ios ion-toolbar {
   height: 52px;
+}
+.md ion-toolbar {
+  height: 56px;
 }
 
 /* Keep search bar with same padding in ios and android */

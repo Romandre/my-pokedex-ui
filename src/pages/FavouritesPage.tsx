@@ -59,6 +59,7 @@ const FavouritesPage: React.FC = () => {
                 <p
                   className={css({
                     fontSize: "14px",
+                    fontWeight: "500",
                     textTransform: "uppercase",
                   })}
                 >
@@ -70,6 +71,7 @@ const FavouritesPage: React.FC = () => {
               <div
                 className={css({
                   width: "36px",
+                  paddingTop: "6px",
                   fontSize: "26px",
                 })}
               >
