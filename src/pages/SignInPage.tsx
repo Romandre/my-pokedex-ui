@@ -60,7 +60,9 @@ const SignInPage: React.FC = () => {
 
     isLoginForm
       ? await axios
-          .post(`${apiUrl}api/auth/login`, user)
+          .post(`${apiUrl}api/auth/login`, user, {
+            timeout: 6000,
+          })
           .then((res) => {
             const token = res?.data?.token;
             if (!token) {
@@ -70,10 +72,18 @@ const SignInPage: React.FC = () => {
             }
           })
           .catch((error) => {
-            toast.error(error.response.data);
+            if (error.code === "ECONNABORTED") {
+              toast.warning(
+                "Something is wrong on the server side. Try again later."
+              );
+            } else {
+              toast.error(error.response.data);
+            }
           })
       : await axios
-          .post(`${apiUrl}api/auth/register`, user)
+          .post(`${apiUrl}api/auth/register`, user, {
+            timeout: 6000,
+          })
           .then((res) => {
             if (!res.data) {
               toast.error("Something went wrong! Try again...");
@@ -82,7 +92,13 @@ const SignInPage: React.FC = () => {
             changeForm();
           })
           .catch((error) => {
-            toast.error(error.response.data);
+            if (error.code === "ECONNABORTED") {
+              toast.warning(
+                "Something is wrong on the server side. Try again later."
+              );
+            } else {
+              toast.error(error.response.data);
+            }
           });
 
     setTimeout(() => {

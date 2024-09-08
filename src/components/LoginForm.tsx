@@ -50,6 +50,7 @@ const LoginForm: React.FC<SignInFormProps> = ({
               username: e.target.value as string,
             }))
           }
+          disabled={isButtonLoading}
           required
         ></IonInput>
       </IonItem>
@@ -75,6 +76,7 @@ const LoginForm: React.FC<SignInFormProps> = ({
             }))
           }
           clearOnEdit={false}
+          disabled={isButtonLoading}
           required
         ></IonInput>
       </IonItem>

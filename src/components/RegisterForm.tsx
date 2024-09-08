@@ -21,6 +21,8 @@ const RegisterForm: React.FC<SignInFormProps> = ({
   isButtonLoading,
 }) => {
   const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
+  const [isShowPasswordRepeat, setIsShowPasswordRepeat] =
+    useState<boolean>(false);
 
   return (
     <form
@@ -48,6 +50,7 @@ const RegisterForm: React.FC<SignInFormProps> = ({
               username: e.target.value as string,
             }))
           }
+          disabled={isButtonLoading}
           required
         ></IonInput>
       </IonItem>
@@ -72,19 +75,20 @@ const RegisterForm: React.FC<SignInFormProps> = ({
             }))
           }
           clearOnEdit={false}
+          disabled={isButtonLoading}
           required
         ></IonInput>
       </IonItem>
 
       <IonItem>
         <IonIcon
-          icon={isShowPassword ? eyeSharp : eyeOffSharp}
+          icon={isShowPasswordRepeat ? eyeSharp : eyeOffSharp}
           color="primary"
           slot="end"
-          onClick={() => setIsShowPassword(!isShowPassword)}
+          onClick={() => setIsShowPasswordRepeat(!isShowPasswordRepeat)}
         ></IonIcon>
         <IonInput
-          type={isShowPassword ? "text" : "password"}
+          type={isShowPasswordRepeat ? "text" : "password"}
           label="Repeat password"
           labelPlacement="floating"
           placeholder="Enter password again"
@@ -96,6 +100,7 @@ const RegisterForm: React.FC<SignInFormProps> = ({
             }))
           }
           clearOnEdit={false}
+          disabled={isButtonLoading}
           required
         ></IonInput>
       </IonItem>
