@@ -164,7 +164,6 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
       const data = response.data;
 
       if (data) {
-        debugger;
         const favouritesFromDb = data.map(
           (item: { pokemon: string }) => item.pokemon
         );
