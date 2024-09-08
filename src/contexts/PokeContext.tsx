@@ -16,6 +16,7 @@ const PokeContext = createContext({
   pokemons: [] as string[],
   favouritePokemons: [] as string[],
   customPokemons: [] as CustomPokemon[],
+  fetchMyCustomPokemons: () => {},
   createMyCustomPokemon: (data: CustomPokemon) => {},
   removeMyCustomPokemon: (pokemon: string) => {},
   flushCustomPokemons: () => {},
@@ -163,6 +164,7 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
       const data = response.data;
 
       if (data) {
+        debugger;
         const favouritesFromDb = data.map(
           (item: { pokemon: string }) => item.pokemon
         );
@@ -257,6 +259,7 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
       pokemons,
       favouritePokemons,
       customPokemons,
+      fetchMyCustomPokemons,
       createMyCustomPokemon,
       removeMyCustomPokemon,
       flushCustomPokemons,
@@ -270,6 +273,7 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }) => {
       pokemons,
       favouritePokemons,
       customPokemons,
+      fetchMyCustomPokemons,
       createMyCustomPokemon,
       removeMyCustomPokemon,
       flushCustomPokemons,

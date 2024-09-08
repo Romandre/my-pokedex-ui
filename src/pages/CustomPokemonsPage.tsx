@@ -9,6 +9,8 @@ import {
   IonTitle,
   IonToolbar,
   useIonActionSheet,
+  useIonViewWillEnter,
+  withIonLifeCycle,
 } from "@ionic/react";
 import { useContext, useEffect, useRef, useState } from "react";
 
@@ -23,8 +25,12 @@ import { css } from "../../styled-system/css";
 import { CustomPokemon } from "../types/types";
 
 const CustomPokemonsPage: React.FC = () => {
-  const { isLoading, customPokemons, createMyCustomPokemon } =
-    useContext(PokeContext);
+  const {
+    isLoading,
+    customPokemons,
+    fetchMyCustomPokemons,
+    createMyCustomPokemon,
+  } = useContext(PokeContext);
   const formattedPokemons = customPokemons?.map((item) => item.name);
   const [newPokemon, setNewPokemon] = useState<CustomPokemon | null>();
 
@@ -103,6 +109,10 @@ const CustomPokemonsPage: React.FC = () => {
     setPresentingElement(page.current);
   }, []);
 
+  useIonViewWillEnter(() => {
+    fetchMyCustomPokemons();
+  });
+
   return (
     <IonPage ref={page}>
       <IonHeader>
@@ -173,4 +183,4 @@ const CustomPokemonsPage: React.FC = () => {
   );
 };
 
-export default CustomPokemonsPage;
+export default withIonLifeCycle(CustomPokemonsPage);

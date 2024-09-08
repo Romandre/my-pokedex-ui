@@ -7,6 +7,8 @@ import {
   IonPopover,
   IonToolbar,
   useIonRouter,
+  useIonViewWillEnter,
+  withIonLifeCycle,
 } from "@ionic/react";
 
 import PokeContext from "../contexts/PokeContext";
@@ -26,9 +28,9 @@ const FavouritesPage: React.FC = () => {
   const favourites = [...favouritePokemons].reverse();
   const isSortingVisible = favouritePokemons.length > 5;
 
-  useEffect(() => {
+  useIonViewWillEnter(() => {
     fetchFavourites();
-  }, [fetchFavourites]);
+  });
 
   return (
     <IonPage>
@@ -115,4 +117,4 @@ const FavouritesPage: React.FC = () => {
   );
 };
 
-export default FavouritesPage;
+export default withIonLifeCycle(FavouritesPage);
