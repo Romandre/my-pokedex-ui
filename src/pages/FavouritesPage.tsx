@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import {
   IonContent,
   IonHeader,
@@ -26,7 +26,7 @@ const FavouritesPage: React.FC = () => {
   const router = useIonRouter();
 
   const favourites = [...favouritePokemons].reverse();
-  const isSortingVisible = favouritePokemons.length > 5;
+  const isSortingVisible = true;
 
   useIonViewWillEnter(() => {
     fetchFavourites();
@@ -82,7 +82,7 @@ const FavouritesPage: React.FC = () => {
                   fontSize: "26px",
                 })}
               >
-                <IonIcon id="sorting" icon={funnelOutline}></IonIcon>
+                <IonIcon id="fav-sorting" icon={funnelOutline}></IonIcon>
               </div>
             )}
           </div>

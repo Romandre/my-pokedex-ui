@@ -105,22 +105,20 @@ const PokemonPage: React.FC<PokemonPagePageProps> = ({ match }) => {
   const findPokemon = useCallback(() => {
     setIsLoading(true);
 
-    if (customPokemons.length) {
-      const customPokemonData = customPokemons.filter(
-        (item) => item.name === currentPokemon
-      );
+    const customPokemonData = customPokemons?.filter(
+      (item) => item.name === currentPokemon
+    );
 
-      if (customPokemonData.length) {
-        const pokemonData: PokemonData = {
-          id: customPokemonData[0].id,
-          name: customPokemonData[0].name,
-          weight: customPokemonData[0].weight || 0,
-        };
+    if (customPokemonData.length) {
+      const pokemonData: PokemonData = {
+        id: customPokemonData[0].id,
+        name: customPokemonData[0].name,
+        weight: customPokemonData[0].weight || 0,
+      };
 
-        setPokemon(pokemonData);
-        setIsCustom(true);
-        setIsLoading(false);
-      }
+      setPokemon(pokemonData);
+      setIsCustom(true);
+      setIsLoading(false);
     } else {
       fetchPokemon();
     }
