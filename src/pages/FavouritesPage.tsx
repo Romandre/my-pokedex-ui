@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   IonContent,
   IonHeader,
@@ -18,12 +18,17 @@ import { css } from "../../styled-system/css";
 import { caretBack, funnelOutline } from "ionicons/icons";
 
 const FavouritesPage: React.FC = () => {
-  const { favouritePokemons, isLoading } = useContext(PokeContext);
+  const { favouritePokemons, isLoading, fetchFavourites } =
+    useContext(PokeContext);
   const [sorting, setSorting] = useState<string>("");
   const router = useIonRouter();
 
   const favourites = [...favouritePokemons].reverse();
   const isSortingVisible = favouritePokemons.length > 5;
+
+  useEffect(() => {
+    fetchFavourites();
+  }, [fetchFavourites]);
 
   return (
     <IonPage>
